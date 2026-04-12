@@ -1,24 +1,35 @@
 import { capitalize } from "./helpers.js";
 
 export default class Card {
+    #suit = "";
+    #rank = "";
+
     constructor(suit, rank) {
-        this._suit = suit;
-        this._rank = rank;
+        this.#suit = suit;
+        this.#rank = rank;
     }
 
     get rank() {
-        return this._rank;
+        return this.#rank;
     }
 
     get suit() {
-        return this._suit;
+        return this.#suit;
     }
 
     printIcon() {
-        return `${this._suit.icon}${this._rank.icon}`
+        return `${this.#suit.icon}${this.#rank.icon}`
     }
 
     print() {
-        return `${capitalize(this._rank.label)} of ${capitalize(this._suit.label)}`
+        return `${capitalize(this.#rank.label)} of ${capitalize(this.#suit.label)}`
+    }
+
+    /**
+     * Compare instances of Card returning true when they are the same.
+     * @param {Card} card - The card to compare to.
+     */
+    equal(card) {
+        return this.#rank === card.rank && this.#suit === card.suit
     }
 }
