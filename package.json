@@ -1,0 +1,24 @@
+{
+  "name": "scoundrel-web",
+  "version": "1.0.0",
+  "description": "A Scoundrel card game implementation to the web.",
+  "homepage": "https://github.com/matecg/scoundrel-web#readme",
+  "bugs": {
+    "url": "https://github.com/matecg/scoundrel-web/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matecg/scoundrel-web.git"
+  },
+  "license": "ISC",
+  "author": "matecg",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+  },
+  "devDependencies": {
+    "@jest/globals": "^30.3.0",
+    "jest": "^30.3.0"
+  }
+}
