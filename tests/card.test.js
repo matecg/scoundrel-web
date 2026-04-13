@@ -1,14 +1,14 @@
 import { expect, test } from "@jest/globals";
 import Card from "../src/card.js";
 
-export const SUITS = [
+const SUITS = [
     {label: "hearts", icon: "♥️"},
     {label: "diamonds", icon: "♦️"}, 
     {label: "spades", icon: "♠️"},
     {label:  "clubs", icon: "♣️"}
 ];
 
-export const RANKS = [
+const RANKS = [
     {label: "two", icon: "2"}, 
     {label: "three", icon: "3"}, 
     {label: "four", icon: "4"}, 
