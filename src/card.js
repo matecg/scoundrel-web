@@ -26,10 +26,11 @@ export default class Card {
     }
 
     /**
-     * Compare instances of Card returning true when they are the same.
+     * Compare Cards returning true when they have the same label on their suit and rank.
      * @param {Card} card - The card to compare to.
      */
     equal(card) {
-        return this.#rank === card.rank && this.#suit === card.suit
+        return this.#rank.label === card.rank.label && 
+            this.#suit.label === card.suit.label;
     }
 }
