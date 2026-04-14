@@ -1,12 +1,9 @@
-import Card from "./card.js";
-import Player from "./player.js";
-
 export default class ScoundrelCard {
     #card = null;
 
     /**
      * A scoundrel game entity base class. Must not be used directly.
-     * @param {Card} card - The card representing this entity.
+     * @param {import("./card.js").default} card - The card representing this entity.
      */
     constructor(card) {
         this.#card = card;
@@ -36,8 +33,8 @@ export default class ScoundrelCard {
     }
 
     /**
-     * Interacts with the player executing an specific action depending on the card type.
-     * @param {Player} player - An instance to the player
+     * Interacts with the player executing an specific action.
+     * @param {import("./player.js").default} player - An instance to the player
      */
     interact(player) {
         throw new Error("Not implemented.");
