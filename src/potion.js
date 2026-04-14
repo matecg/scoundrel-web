@@ -12,11 +12,15 @@ export default class Potion extends ScoundrelCard {
         if (card.suit.label !== "hearts" ||
             REMOVE_POTS_AND_WEAPONS.includes(card.rank.icon)
         )
-            throw new Error("Potions must be from Hearts suit");
+            throw new Error("Potions must be 2s to 10s from Hearts suit");
 
         super(card);
     }
 
+    /**
+     * Heals the player.
+     * @param {import("./player.js").default} player - The player instance
+     */
     interact(player) {
         if (this.interacted) return;
 
