@@ -39,7 +39,7 @@ export default class Deck {
      */
     draw(amount = 1) {
         if (typeof amount !== "number") return;
-        if (amount <= 0) return;
+        if (amount <= 0) throw new Error('draw amount must be greater than zero');
 
         const cards = this.#cards.splice(0, amount);
         return cards;
