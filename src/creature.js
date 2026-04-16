@@ -6,8 +6,8 @@ export default class Creature extends ScoundrelCard {
      * @param {import("./card.js").default} card 
      */
     constructor(card) {
-        if (card.suit !== "spades" || card.suit !== "clubs")
-            throw new Error(`Creatures may only be spades or clubs. Not ${card.suit}`);
+        if (card.suit.label !== "spades" && card.suit.label !== "clubs")
+            throw new Error("Creatures may only be spades or clubs.");
 
         super(card);
     }
@@ -17,6 +17,8 @@ export default class Creature extends ScoundrelCard {
      * @param {import("./player.js").default} player 
      */
     interact(player) {
+        if (this.interacted) return;
+        
         this.interacted = true;
         player.combat(this.getValue());
     }
