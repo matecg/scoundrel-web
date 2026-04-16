@@ -34,6 +34,17 @@ export default class Deck {
     }
 
     /**
+     * Add an array of cards to the end of the deck.
+     * @param {Card[]} cards - The array of cards to add.
+     */
+    push(cards) {
+        if (cards.length === 0) return;
+        for (const c of cards) {
+            this.#cards.push(c);
+        }
+    }
+
+    /**
      * Draws the topmost card(s) and remove them from the deck.
      * @param {number} amount - The number of cards that will drafted
      */
@@ -47,10 +58,12 @@ export default class Deck {
 
     /**
      * Removes specific cards from the deck.
-     * @param {Card[]} cards  - An array of cards to be removed
+     * @param {Card[]} cards  - An array of cards or suits to be removed
      */
     remove(cards) {
-        this.#cards = this.#cards.filter((card) => !cards.some(c => c.equal(card)));
+        if (cards.length === 0) return;
+        if (cards[0] instanceof Card)
+            this.#cards = this.#cards.filter((card) => !cards.some(c => c.equal(card)));
     }
 
     /**

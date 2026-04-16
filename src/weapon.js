@@ -32,6 +32,7 @@ export default class Weapon extends ScoundrelCard {
 
     /**
      * Tries to attack a creature, throwing an error if its beyond its durability capacity.
+     * An attack is calculated by the creaturePower - weaponPower, therefore it might be negative.
      * @param {import("./creature.js").default} creaturePower - The creature being attacked
      * @returns {number} - The damage after reducing it with the weapons power.
      */

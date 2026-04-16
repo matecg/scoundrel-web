@@ -1,10 +1,11 @@
 import Weapon from "./weapon.js";
 
 export default class Player {
-    constructor() {
+    constructor(name) {
         this.health = 20;
         this.weapon = null;
         this.canSkip = true;
+        this.name = name;
     }
 
     /**
@@ -22,7 +23,8 @@ export default class Player {
      * @param {Weapon} weapon - The new weapon.
      */
     equipWeapon(weapon) {
-        if (!(weapon instanceof Weapon)) return;
+        if (!(weapon instanceof Weapon)) 
+            throw new Error("Weapon must be an instance from Weapon class");
         this.weapon = weapon;
     }
 
