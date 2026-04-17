@@ -4,7 +4,6 @@ export default class Player {
     constructor(name) {
         this.health = 20;
         this.weapon = null;
-        this.canSkip = true;
         this.name = name;
     }
 
@@ -48,6 +47,7 @@ export default class Player {
             if (this.health <= 0)
                 this.health = 0;
                 // dispatch an event?
+            return damage;
         }
     }
 }
