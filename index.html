@@ -1,23 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Scoundrel</title>
 </head>
+
 <body>
-  <div>
+  <div class="content">
     <h1>Scoundrel</h1>
     <div>
       <label for="username">Enter a name:</label>
       <input type="text" name="username" id="username">
-      <span></span>
+      <span class="input-feedback"></span>
     </div>
     <div>
-      <button>Start</button>
-      <button>Rules</button>
+      <button class="start-btn">Start</button>
+      <button class="rules-btn">Rules</button>
     </div>
+    <dialog closedby="any" class="rules">
+      <h2>Rules</h2>
+      <p>Each suit represent a special dungeon element. To either aid or harm you.</p>
+      <p>Your <strong>goal</strong> is to explore all the dungeon's rooms and survive them all.</p>
+      <p>You will lose if your health reaches zero.</p>
+      <ul>
+        <li>Rooms:
+          <ul>
+            <li>Are represented by the 4 topmost cards from the deck.</li>
+            <li>You must choose and interact with 3 of them in order to complete a room.</li>
+            <li>The left over card will be carried into the next room.</li>
+            <li>You may also <strong>Skip</strong> a room entirely, sending those cards to the bottom of the deck.</li>
+            <li>But, you may <strong>not</strong> skip two rooms in a roll.</li>
+          </ul>
+        </li>
+        <li>♥️ Hearts represent <strong>Potions</strong>:
+          <ul>
+            <li>Range from rank 2 to 10.</li>
+            <li>Can be used only once per room.</li>
+            <li>Additional potions consumed on the same room will simply be discarded.</li>
+          </ul>
+        </li>
+        <li>♦️ Diamonds represent <strong>Weapons:</strong>
+          <ul>
+            <li>Range from rank 2 to 10.</li>
+            <li>Used in combat against creatures to lower the damage received.</li>
+            <li>Equipping a new weapon automatically discards the previous.</li>
+            <li>After killing a monster, the creatures power is added to durability, as a new maximum.</li>
+            <li>It can only kill a monster with a value lower than the last monster it killed (or its initial value).</li>
+            <li>You may always fight barehanded, taking all the damage from the creature to defeat it.</li>
+          </ul>
+        </li>
+        <li>♣️|♠️ Clubs & Spades represent <strong>Monsters</strong>:
+          <ul>
+            <li>Range from rank 2 to Ace.</li>
+            <li>A monster power is represented by the card value.</li>
+            <li>"J" = 11, "Q" = 12, "K" = 13, and "A" = 14.</li>
+          </ul>
+        </li>
+      </ul>
+      <p>Your final score starts at zero and gets deduced by the value of each creature you haven't defeated.</p>
+      <p>Alternatively, it will be increased by the remaining health points.</p>
+      <p>Also, if your last card, left in the dungeon, is a potion, its value will be added to your final score.</p>
+      <p>That way the maximum score achievable is: 30 (20 points from health + 10 points from a non-used potion)</p>
+      <p><em>Be wary, be smart. Best of luck!</em></p>
+      <button>Close</button>
+    </dialog>
   </div>
   <script type="module" src="index.js"></script>
 </body>
+
 </html>
