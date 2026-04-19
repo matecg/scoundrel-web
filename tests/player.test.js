@@ -4,13 +4,14 @@ import Weapon from "../src/weapon.js";
 import Card from "../src/card.js";
 import { RANKS, SUITS } from "../src/helpers.js";
 import Creature from "../src/creature.js";
+import { MAX_HEALTH } from "../src/helpers.js";
 
 test('can create a player with all defaults correct', () => {
     const p = new Player("John");
 
     expect(p).toBeInstanceOf(Player);
     expect(p.name).toBe("John");
-    expect(p.health).toBe(20);
+    expect(p.health).toBe(MAX_HEALTH);
     expect(p.weapon).toBeNull();
 });
 
@@ -25,12 +26,12 @@ test('correctly heals player', () => {
     expect(p.health).toBe(INITIAL_HEALTH + HEAL_AMOUNT);
 });
 
-test("player's health won't go above 20", () => {
+test("player's health won't go above MAX_HEALTH", () => {
     const p = new Player("John");
 
-    expect(p.health).toBe(20);
+    expect(p.health).toBe(MAX_HEALTH);
     p.heal(10000);
-    expect(p.health).toBe(20);
+    expect(p.health).toBe(MAX_HEALTH);
 })
 
 test('throws when heal is non numeric type', () => {

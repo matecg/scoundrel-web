@@ -1,8 +1,9 @@
+import { MAX_HEALTH } from "./helpers.js";
 import Weapon from "./weapon.js";
 
 export default class Player {
     constructor(name) {
-        this.health = 20;
+        this.health = MAX_HEALTH;
         this.weapon = null;
         this.name = name;
     }
@@ -14,7 +15,7 @@ export default class Player {
     heal(amount) {
         if (typeof amount !== "number" || amount <= 0)
             throw new Error("Invalid healing amount provided");
-        this.health = amount + this.health > 20 ? 20 : amount + this.health;
+        this.health = amount + this.health > MAX_HEALTH ? MAX_HEALTH : amount + this.health;
     }
 
     /**

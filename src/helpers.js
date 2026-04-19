@@ -24,6 +24,7 @@ export const RANKS = [
 export const REMOVE_POTS_AND_WEAPONS = ["J", "Q", "K", "A"];
 
 export const ROOM_SIZE = 4;
+export const MAX_HEALTH = 20;
 
 export function capitalize(word) {
     if (typeof word !== "string") return;
