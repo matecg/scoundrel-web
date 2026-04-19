@@ -1,7 +1,10 @@
 import Card from "./card.js";
+import Creature from "./creature.js";
 import Deck from "./deck.js";
 import { RANKS, SUITS } from "./helpers.js";
 import { REMOVE_POTS_AND_WEAPONS, ROOM_SIZE } from "./helpers.js";
+import Potion from "./potion.js";
+import Weapon from "./weapon.js";
 
 
 export default class Dungeon {
@@ -40,7 +43,20 @@ export default class Dungeon {
         const toRemove = hearts.concat(diamonds);
         deck.remove(toRemove);
         deck.shuffle();
-        return deck;
+        const dungeon = deck.cards.map(card => {
+            switch(card.suit.label) {
+                case "spades":
+                case "clubs":
+                    return new Creature(card);
+                case "diamonds":
+                    return new Weapon(card);
+                case "hearts":
+                    return new Potion(card);
+                default:
+                    throw new Error("Invalid card received");
+            }
+        })
+        return dungeon;
     }
 
     #isEmpty(room = []) {
