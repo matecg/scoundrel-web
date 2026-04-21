@@ -39,4 +39,8 @@ export default class ScoundrelCard {
     interact(player) {
         throw new Error("Not implemented.");
     }
+
+    label() {
+        return Object.getPrototypeOf(this).constructor.name;
+    }
 }
