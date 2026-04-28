@@ -1,3 +1,5 @@
+import { DECK, SKIP_FROM } from "./helpers.js";
+
 /**
  * Extract the current value and entity name from a card.
  * @param {{suit: string, rank: string}} card - A card to transform

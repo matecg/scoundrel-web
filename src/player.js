@@ -1,3 +1,5 @@
+import { MAX_HEALTH } from "./helpers.js";
+
 /**
  * Creates a new player object.
  * @param {string} name - Player's name
