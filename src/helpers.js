@@ -1,30 +1,31 @@
-export const SUITS = [
-    {label: "hearts", icon: "♥️"},
-    {label: "diamonds", icon: "♦️"}, 
-    {label: "spades", icon: "♠️"},
-    {label:  "clubs", icon: "♣️"}
-];
-
-export const RANKS = [
-    {label: "two", icon: "2"}, 
-    {label: "three", icon: "3"}, 
-    {label: "four", icon: "4"}, 
-    {label: "five", icon: "5"}, 
-    {label: "six", icon: "6"}, 
-    {label: "seven", icon: "7"}, 
-    {label: "eight", icon: "8"},
-    {label: "nine", icon:  "9"},
-    {label: "ten", icon:  "10"},
-    {label: "valet", icon: "J"},
-    {label: "queen", icon: "Q"},
-    {label: "king", icon: "K"},
-    {label: "ace", icon: "A"}
-];
-
-export const REMOVE_POTS_AND_WEAPONS = ["J", "Q", "K", "A"];
-
-export const ROOM_SIZE = 4;
+export const DECK = {
+    ranks: ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"],
+    suits: ["♥️", "♠️", "♣️", "♦️"]
+}
+export const SKIP_FROM = ["J", "Q", "K", "A"];
 export const MAX_HEALTH = 20;
+export const ENTITIES = {
+    "potion": (player, value) => {
+        player.health = Math.min(player.health + value, MAX_HEALTH);
+    },
+    "weapon": (player, value) => {
+        player.weapon = {
+            value,
+            durability: []
+        }
+    },
+    "creature": (player, value) => {
+        let damage = value;
+        if (player.weapon.value) {
+            const lastCreatureValue = player.weapon.durability.at(-1);
+            if (lastCreatureValue && lastCreatureValue > value) {
+                damage = Math.max(value - player.weapon.value, 0);
+                player.weapon.durability.push(value);
+            }
+        }
+        player.health = Math.max(player.health - damage, 0);
+    }
+}
 
 export function capitalize(word) {
     if (typeof word !== "string") return;
