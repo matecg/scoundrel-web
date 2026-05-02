@@ -35,6 +35,7 @@ export default function createGameUI() {
     for (let i = 0; i < ROOM_SIZE; i++) {
         const entityButton = document.createElement("button");
         entityButton.classList.add("entity");
+        entityButton.dataset["entity"] = "";
         roomContainer.appendChild(entityButton);
     }
 

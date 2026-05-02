@@ -59,10 +59,12 @@ export function createDungeon() {
         const fromIdx = i % elements.length;
         [elements[randomIdx], elements[fromIdx]] = [elements[fromIdx], elements[randomIdx]]
     }
-    return {
+    const dungeon = {
         elements,
         canSkip: true,
         nextRoom: [],
         interacted: []
-    }
+    };
+    getNextRoom(dungeon);
+    return dungeon;
 }

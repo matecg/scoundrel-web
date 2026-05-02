@@ -32,3 +32,12 @@ export function capitalize(word) {
     if (typeof word !== "string") return;
     return `${word[0].toLocaleUpperCase()}${word.slice(1)}`;
 }
+
+/**
+ * Transforms an entity object into a string label.
+ * @param {{suit:string, rank: string}} entity - An entity from the dungeon
+ * @returns {string}
+ */
+export function entityLabel(entity) {
+    return `${entity.suit}${entity.rank}`;
+}
