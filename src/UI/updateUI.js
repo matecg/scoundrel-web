@@ -1,4 +1,4 @@
-import { capitalize, entityLabel as getEntityLabel, ROOM_SIZE } from "../misc/helpers.js";
+import { capitalize, getEntityLabel, ROOM_SIZE } from "../misc/helpers.js";
 
 /**
  * Update all UI components of the game at once.

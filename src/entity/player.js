@@ -27,6 +27,7 @@ export function interactWithEntity(dg, player, index) {
     if (index >= dg.nextRoom.length) return;
     if (dg.nextRoom.length === 1) return;
 
+    // TODO: Refactor this! It's not player responsibility to update the Dungeon status!
     const next = dg.nextRoom.splice(index, 1)[0];
     dg.interacted.push(next);
     const { entity, value } = getEntityAndValue(next);

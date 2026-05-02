@@ -38,6 +38,46 @@ export function capitalize(word) {
  * @param {{suit:string, rank: string}} entity - An entity from the dungeon
  * @returns {string}
  */
-export function entityLabel(entity) {
+export function getEntityLabel(entity) {
     return `${entity.suit}${entity.rank}`;
+}
+
+/**
+ * Extracts an entity object representation from its label.
+ * @param {string} label - An entity label
+ * @returns {{suit: string, rank: string}}
+ */
+export function getEntityFromLabel(label) {
+    const output = {};
+    for (const suit of DECK.suits) {
+        if (label.includes(suit)) output.suit = suit;
+    }
+    output.rank = label.replace(output.suit, "");
+    return output;
+}
+
+/**
+ * Extract the current value and entity name from a card.
+ * @param {{suit: string, rank: string}} card - A card to transform
+ * @returns {{name: string, value: number}}
+ */
+export function getEntityAndValue(card) {
+    const output = {}
+    switch (card.suit) {
+        case "♥️":
+            output.name = "potion";
+            break;
+        case "♦️":
+            output.name = "weapon";
+            break;
+        case "♣️":
+        case "♠️":
+            output.name = "creature";
+            break;
+        default:
+            break;
+    }
+    const rankIdx = DECK.ranks.findIndex(rank => rank === card.rank);
+    output.value = rankIdx + 2;
+    return output;
 }

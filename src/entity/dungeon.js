@@ -1,30 +1,6 @@
 import { DECK, SKIP_FROM } from "../misc/helpers.js";
 
-/**
- * Extract the current value and entity name from a card.
- * @param {{suit: string, rank: string}} card - A card to transform
- * @returns {{entity: string, value: number}}
- */
-export function getEntityAndValue(card) {
-    const output = {}
-    switch (card.suit) {
-        case "♥️":
-            output.entity = "potion";
-            break;
-        case "♦️":
-            output.entity = "weapon";
-            break;
-        case "♣️":
-        case "♠️":
-            output.entity = "creature";
-            break;
-        default:
-            break;
-    }
-    const rankIdx = DECK.ranks.findIndex(rank => rank === card.rank);
-    output.value = rankIdx + 2;
-    return output;
-}
+
 
 /**
  * Generates the next room, based on the current room state.
