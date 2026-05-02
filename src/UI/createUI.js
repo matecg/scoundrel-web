@@ -30,7 +30,7 @@ export default function createGameUI() {
     durabilityPara.classList.add("weapon-durability");
 
     const selectedContainer = document.createElement("div");
-    selectedContainer.classList.add("selected-card");
+    selectedContainer.classList.add("selected");
 
     const roomContainer = document.createElement("div");
     roomContainer.classList.add("room");
@@ -38,9 +38,6 @@ export default function createGameUI() {
         const entityButton = document.createElement("button");
         entityButton.classList.add("entity");
         entityButton.dataset["entity"] = "";
-        entityButton.addEventListener('click', (e) => {
-            selectEntity(e.target.textContent, selectedContainer);
-        })
         roomContainer.appendChild(entityButton);
     }
 
@@ -52,38 +49,33 @@ export default function createGameUI() {
     container.appendChild(nextRoomBtn);
     container.appendChild(skipRoomBtn);
     container.appendChild(selectedContainer);
+
+    createEntitySelectionUI(selectedContainer);
 }
 
 /**
  * Renders details about an entity after being selected.
- * @param {string} entityLabel - An entity label
  * @param {HTMLDivElement} container - Container HTML element
  */
-function selectEntity(entityLabel, container) {
+function createEntitySelectionUI(container) {
     container.replaceChildren();
-    const entityCard = getEntityFromLabel(entityLabel);
-    const entity = getEntityAndValue(entityCard);
-    const entityParagraph = document.createElement("p");
-    const descriptionParagraph = document.createElement("p");
-    const interactButton = document.createElement("button");
 
-    entityParagraph.textContent = capitalize(entity.name);
-    
-    switch (entity.name) {
-        case "potion":
-            descriptionParagraph.textContent = `Heal: ${entity.value}.`
-            interactButton.textContent = "Drink";
-            break;
-        case "weapon":
-            descriptionParagraph.textContent = `Damage: ${entity.value}.`
-            interactButton.textContent = "Equip";
-            break;
-        case "creature":
-            descriptionParagraph.textContent = `Strength: ${entity.value}.`
-            interactButton.textContent = "Fight";
-            break;
-    }
+    const entityParagraph = document.createElement("p");
+    entityParagraph.classList.add("entity-name");
+
+    const entityValueParagraph = document.createElement("p");
+    entityValueParagraph.classList.add("entity-value");
+
+    const interactButton = document.createElement("button");
+    interactButton.classList.add("interact-button");
+
+    const extraButton = document.createElement("button");
+    extraButton.classList.add("extra-button");
+    extraButton.style.display = "none";
+   
     container.appendChild(entityParagraph);
-    container.appendChild(descriptionParagraph);
+    container.appendChild(entityValueParagraph);
     container.appendChild(interactButton);
+    container.appendChild(extraButton);
+    container.style.display = "none";
 }
