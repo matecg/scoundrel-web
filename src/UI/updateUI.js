@@ -74,3 +74,36 @@ export function updateRoom(room, canSkip) {
     nextBtn.disabled = room.length !== 1;
     skipBtn.disabled = !(room.length === ROOM_SIZE) || !canSkip;
 }
+
+export function updateEntitySelection(entity, canUseWeapon) {
+    const {name, value} = entity;
+    const nameParagraph = document.querySelector(".entity-name");
+    const valueParagraph = document.querySelector(".entity-value");
+    const interactButton = document.querySelector(".interact-button");
+    const extraButton = document.querySelector(".extra-button");
+
+    extraButton.style.display = "none";
+    nameParagraph.textContent = capitalize(name);
+    switch (name) {
+        case "potion":
+            valueParagraph.textContent = `Heals for ${value} points`        
+            interactButton.textContent = "Drink";
+            break;
+        case "weapon":
+            valueParagraph.textContent = `Damage: ${value}`  
+            interactButton.textContent = "Equip";
+            break;
+        case "creature":
+            if (canUseWeapon) {
+                extraButton.textContent = "Use weapon";
+                extraButton.style.display = "inline-block";
+            }
+            valueParagraph.textContent = `Strength: ${value}`;
+            interactButton.textContent = "Fight unarmed";
+            break;
+        default:
+            return;
+    }
+
+    document.querySelector(".selected").style.display = "block";
+}

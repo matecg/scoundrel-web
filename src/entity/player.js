@@ -33,3 +33,15 @@ export function interactWithEntity(dg, player, index) {
     const { entity, value } = getEntityAndValue(next);
     ENTITIES[entity](player, value);
 }
+
+/**
+ * Check whether or not the current weapon can be used in combat against a creature.
+ * @param {{value: number, durability: number[]}} weapon - A weapon representation
+ * @param {number} creatureStrength - The creatures strength value
+ * @returns {boolean}
+ */
+export function canUseWeapon(weapon, creatureStrength) {
+    const {durability, value} = weapon;
+    
+    return value && durability.at(-1) > creatureStrength;
+}
