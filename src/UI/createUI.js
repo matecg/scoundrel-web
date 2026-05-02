@@ -1,4 +1,4 @@
-import { MAX_HEALTH } from "../helpers.js";
+import { MAX_HEALTH } from "../misc/helpers.js";
 
 /**
  * Create the HTML elements for the scoundrel game.

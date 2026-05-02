@@ -1,4 +1,4 @@
-import { DECK, SKIP_FROM } from "./helpers.js";
+import { DECK, SKIP_FROM } from "../misc/helpers.js";
 
 /**
  * Extract the current value and entity name from a card.

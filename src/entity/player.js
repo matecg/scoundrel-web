@@ -1,4 +1,4 @@
-import { MAX_HEALTH } from "./helpers.js";
+import { MAX_HEALTH } from "../misc/helpers.js";
 
 /**
  * Creates a new player object.
