@@ -1,4 +1,4 @@
-import { MAX_HEALTH } from "../misc/helpers.js";
+import { MAX_HEALTH, ROOM_SIZE } from "../misc/helpers.js";
 
 /**
  * Create the HTML elements for the scoundrel game.
@@ -32,6 +32,11 @@ export default function createGameUI() {
 
     const roomContainer = document.createElement("div");
     roomContainer.classList.add("room");
+    for (let i = 0; i < ROOM_SIZE; i++) {
+        const entityButton = document.createElement("button");
+        entityButton.classList.add("entity");
+        roomContainer.appendChild(entityButton);
+    }
 
     container.appendChild(playerPara);
     container.appendChild(healthPara);

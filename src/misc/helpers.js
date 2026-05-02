@@ -4,6 +4,7 @@ export const DECK = {
 }
 export const SKIP_FROM = ["J", "Q", "K", "A"];
 export const MAX_HEALTH = 20;
+export const ROOM_SIZE = 4;
 export const ENTITIES = {
     "potion": (player, value) => {
         player.health = Math.min(player.health + value, MAX_HEALTH);
