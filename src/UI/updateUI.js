@@ -64,9 +64,8 @@ export function updateRoom(room, canSkip) {
     const roomLength = room.filter(entity => !entity.interacted).length;
     for (let i = 0; i < ROOM_SIZE; i++) {
         const next = entityButtons[i];
-        if (!next.dataset["entity"]) {
-            next.dataset["entity"] = entityLabels[i];
-        }
+        next.dataset["entity"] = entityLabels[i];
+        
         next.disabled = roomLength === 1 || room[i].interacted;
         next.textContent = entityLabels[i];
     }

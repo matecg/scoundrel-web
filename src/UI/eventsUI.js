@@ -1,3 +1,4 @@
+import { getNextRoom } from "../entity/dungeon.js";
 import { canUseWeapon } from "../entity/player.js";
 import { getEntityAndValue, getEntityFromLabel, MAX_HEALTH } from "../misc/helpers.js";
 import { updateEntitySelection, updatePlayerHealth, updateRoom, updateWeapon } from "./updateUI.js";
@@ -5,6 +6,7 @@ import { updateEntitySelection, updatePlayerHealth, updateRoom, updateWeapon } f
 export default function setGameEvents(state) {
     setEntitySelectionEvent(state);
     setEntityInteractionEvent(state);
+    setNextRoomEvent(state);
 }
 
 function setEntitySelectionEvent(state) {
@@ -29,7 +31,7 @@ function setEntityInteractionEvent(state) {
         .addEventListener('click', (e) => {
             const data = e.target.dataset;
             const entityName = data["name"];
-            const value = data["value"];
+            const value = +data["value"];
             const entityCard = { suit: data["suit"], rank: data["rank"] };
             
             dungeon.nextRoom.find(card => card.suit === entityCard.suit
@@ -38,6 +40,7 @@ function setEntityInteractionEvent(state) {
             switch (entityName) {
                 case "potion":
                     if (!player.canUsePotion) break;
+                    console.log(player.health + value);
                     player.health = Math.min(MAX_HEALTH, player.health + value);
                     player.canUsePotion = false;
                     updatePlayerHealth(player.health);
@@ -70,5 +73,17 @@ function setEntityInteractionEvent(state) {
             updatePlayerHealth(player.health);
             updateWeapon(player.weapon);
             updateRoom(dungeon.nextRoom);
+        })
+}
+
+function setNextRoomEvent(state) {
+    const {player, dungeon} = state;
+    
+    document.querySelector(".room-next")
+        .addEventListener('click', (e) => {
+            player.canUsePotion = true;
+            const nextRoom = getNextRoom(dungeon);
+            console.log(nextRoom);
+            updateRoom(nextRoom, dungeon.canSkip);
         })
 }

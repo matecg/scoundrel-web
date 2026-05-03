@@ -1,20 +1,25 @@
-import { DECK, SKIP_FROM } from "../misc/helpers.js";
-
-
+import { DECK, ROOM_SIZE, SKIP_FROM } from "../misc/helpers.js";
 
 /**
  * Generates the next room, based on the current room state.
  * @param {Object} dg - A dungeon object
+ * @returns {Object[]}
  */
 export function getNextRoom(dg) {
-    if (dg.nextRoom.length == 0 || dg.nextRoom.length == 1) {
+    const roomLength = dg.nextRoom.filter(entity => !entity.interacted).length;
+    
+    if (roomLength == 0 || roomLength == 1) {
         dg.canSkip = true;
-        dg.nextRoom = dg.elements.splice(0, 4);
-    } else if (dg.nextRoom.length == 4 && dg.canSkip) {
+        const next = dg.elements.splice(0, ROOM_SIZE - roomLength);
+        const cardsLeft = dg.nextRoom.filter(card => !card.interacted);
+        dg.interacted.push(...dg.nextRoom);    
+        dg.nextRoom = [...cardsLeft, ...next];
+    } else if (roomLength == ROOM_SIZE && dg.canSkip) {
         dg.canSkip = false;
         dg.elements.push(...dg.nextRoom);
-        dg.nextRoom = dg.elements.splice(0, 4);
+        dg.nextRoom = dg.elements.splice(0, ROOM_SIZE);
     }
+    return dg.nextRoom;
 }
 
 /**
@@ -39,6 +44,7 @@ export function createDungeon() {
         elements,
         canSkip: true,
         nextRoom: [],
+        interacted: []
     };
     getNextRoom(dungeon);
     return dungeon;
