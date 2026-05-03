@@ -1,4 +1,4 @@
-import { capitalize, getEntityLabel, ROOM_SIZE } from "../misc/helpers.js";
+import { capitalize, getEntityAndValue, getEntityLabel, MAX_HEALTH, ROOM_SIZE } from "../misc/helpers.js";
 
 /**
  * Update all UI components of the game at once.
@@ -30,7 +30,7 @@ export function updatePlayerName(name) {
 export function updatePlayerHealth(newValue) {
     const healthParagraph = document.querySelector(".player-health");
     const oldValue = healthParagraph.textContent
-    healthParagraph.textContent = oldValue.replace(/^\d{1,2}\/$/, `${newValue}/`);
+    healthParagraph.textContent = `Health: ${newValue}/${MAX_HEALTH}`;
 }
 
 /**
@@ -41,14 +41,15 @@ export function updateWeapon(weapon) {
     const weaponDmgParagraph = document.querySelector(".weapon-value");
     weaponDmgParagraph.textContent = weapon.value ? `${weapon.value} damage` : "Weapon Damage: 0 (unarmed)";
     const durabilityParagraph = document.querySelector(".weapon-durability");
-    durabilityParagraph.textContent = "";
     if (weapon.durability.length > 0) {
-        const creaturesDefeated = weapon.durability.reduce((prev, curr, i) => {
-            if (i < weapon.durability.length - 1) curr += `${prev}, `;
-            else curr += `${prev}.`;
-            return curr;
-        }, "Creatures defeated: ");
-        durabilityParagraph.textContent = creaturesDefeated;
+        durabilityParagraph.textContent = "Defeated: ";
+        weapon.durability.forEach((value, i) => {
+            durabilityParagraph.textContent += i < weapon.durability.length - 1 
+            ? `${value}, ` 
+            : `${value}.`
+        });
+    } else {
+         durabilityParagraph.textContent = "";
     }
 }
 
@@ -60,23 +61,25 @@ export function updateWeapon(weapon) {
 export function updateRoom(room, canSkip) {
     const entityButtons = document.querySelectorAll(".entity");
     const entityLabels = room.map(getEntityLabel);
+    const roomLength = room.filter(entity => !entity.interacted).length;
     for (let i = 0; i < ROOM_SIZE; i++) {
         const next = entityButtons[i];
         if (!next.dataset["entity"]) {
             next.dataset["entity"] = entityLabels[i];
         }
-        next.disabled = room.length === 1 || !entityLabels.includes(next.dataset["entity"]);
+        next.disabled = roomLength === 1 || room[i].interacted;
         next.textContent = entityLabels[i];
     }
-    
+
     const nextBtn = document.querySelector(".room-next");
     const skipBtn = document.querySelector(".room-skip");
-    nextBtn.disabled = room.length !== 1;
-    skipBtn.disabled = !(room.length === ROOM_SIZE) || !canSkip;
+    nextBtn.disabled = roomLength !== 1;
+    skipBtn.disabled = !(roomLength === ROOM_SIZE) || !canSkip;
+    document.querySelector(".selected").style.display = "none";
 }
 
-export function updateEntitySelection(entity, canUseWeapon) {
-    const {name, value} = entity;
+export function updateEntitySelection(entityCard, canUseWeapon) {
+    const { name, value } = getEntityAndValue(entityCard);
     const nameParagraph = document.querySelector(".entity-name");
     const valueParagraph = document.querySelector(".entity-value");
     const interactButton = document.querySelector(".interact-button");
@@ -84,13 +87,20 @@ export function updateEntitySelection(entity, canUseWeapon) {
 
     extraButton.style.display = "none";
     nameParagraph.textContent = capitalize(name);
+    [interactButton, extraButton].forEach(btn => {
+        btn.dataset["name"] = name;
+        btn.dataset["value"] = value;
+        btn.dataset["suit"] = entityCard.suit;
+        btn.dataset["rank"] = entityCard.rank;
+    });
+
     switch (name) {
         case "potion":
-            valueParagraph.textContent = `Heals for ${value} points`        
+            valueParagraph.textContent = `Heals for ${value} points`
             interactButton.textContent = "Drink";
             break;
         case "weapon":
-            valueParagraph.textContent = `Damage: ${value}`  
+            valueParagraph.textContent = `Damage: ${value}`
             interactButton.textContent = "Equip";
             break;
         case "creature":
