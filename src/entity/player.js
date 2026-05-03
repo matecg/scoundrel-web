@@ -12,27 +12,10 @@ export function createPlayer(name) {
         weapon: {
             value: 0,
             durability: []
-        }
+        },
+        canUsePotion: true
     }
-}
-
-/**
- * Tries to interact with a given index card from the current dungeon room.
- * @param {Object} dg - A dungeon object
- * @param {Object} player - A player object
- * @param {number} index - The index to interact with
- */
-export function interactWithEntity(dg, player, index) {
-    if (dg.interacted.includes(dg.nextRoom[index])) return;
-    if (index >= dg.nextRoom.length) return;
-    if (dg.nextRoom.length === 1) return;
-
-    // TODO: Refactor this! It's not player responsibility to update the Dungeon status!
-    const next = dg.nextRoom.splice(index, 1)[0];
-    dg.interacted.push(next);
-    const { entity, value } = getEntityAndValue(next);
-    ENTITIES[entity](player, value);
-}
+};
 
 /**
  * Check whether or not the current weapon can be used in combat against a creature.
@@ -42,6 +25,5 @@ export function interactWithEntity(dg, player, index) {
  */
 export function canUseWeapon(weapon, creatureStrength) {
     const {durability, value} = weapon;
-    
-    return value && durability.at(-1) > creatureStrength;
+    return value && (durability.length == 0 || durability.at(-1) > creatureStrength);
 }
