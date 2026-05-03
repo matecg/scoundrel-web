@@ -116,3 +116,9 @@ export function updateEntitySelection(entityCard, canUseWeapon) {
 
     document.querySelector(".selected").style.display = "block";
 }
+
+export function updateGameOverState(state) {
+    document.querySelector(".selected").style.display = "none";
+    document.querySelector(".room").style.display = "none";
+    document.querySelector(".game-over").style.display = "block";
+}

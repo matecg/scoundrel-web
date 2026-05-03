@@ -1,12 +1,13 @@
 import { getNextRoom } from "../entity/dungeon.js";
 import { canUseWeapon } from "../entity/player.js";
 import { getEntityAndValue, getEntityFromLabel, MAX_HEALTH } from "../misc/helpers.js";
-import { updateEntitySelection, updatePlayerHealth, updateRoom, updateWeapon } from "./updateUI.js";
+import { updateEntitySelection, updateGameOverState, updatePlayerHealth, updateRoom, updateWeapon } from "./updateUI.js";
 
 export default function setGameEvents(state) {
     setEntitySelectionEvent(state);
     setEntityInteractionEvent(state);
-    setNextRoomEvent(state);
+    setRoomControlEvent(state);
+    setGameOverEvent(state);
 }
 
 function setEntitySelectionEvent(state) {
@@ -33,9 +34,9 @@ function setEntityInteractionEvent(state) {
             const entityName = data["name"];
             const value = +data["value"];
             const entityCard = { suit: data["suit"], rank: data["rank"] };
-            
+
             dungeon.nextRoom.find(card => card.suit === entityCard.suit
-               && card.rank === entityCard.rank).interacted = true;
+                && card.rank === entityCard.rank).interacted = true;
 
             switch (entityName) {
                 case "potion":
@@ -53,6 +54,12 @@ function setEntityInteractionEvent(state) {
                 case "creature":
                     player.health = Math.max(0, player.health - value);
                     updatePlayerHealth(player.health);
+                    if (player.health == 0) {
+                        const gameOverEvent = new CustomEvent("game-over", {
+                            bubbles: true,
+                        });
+                        e.target.dispatchEvent(gameOverEvent);
+                    }
                     break;
             }
             updateRoom(dungeon.nextRoom, dungeon.canSkip);
@@ -65,7 +72,7 @@ function setEntityInteractionEvent(state) {
             const entityCard = { suit: data["suit"], rank: data["rank"] };
 
             dungeon.nextRoom.find(card => card.suit === entityCard.suit
-               && card.rank === entityCard.rank).interacted = true;
+                && card.rank === entityCard.rank).interacted = true;
             const damage = Math.max(0, value - player.weapon.value);
             player.health = Math.max(0, player.health - damage);
             player.weapon.durability.push(value);
@@ -73,17 +80,40 @@ function setEntityInteractionEvent(state) {
             updatePlayerHealth(player.health);
             updateWeapon(player.weapon);
             updateRoom(dungeon.nextRoom);
+
+            if (player.health == 0) {
+                const gameOverEvent = new CustomEvent("game-over", {
+                    bubbles: true,
+                });
+                e.target.dispatchEvent(gameOverEvent);
+            }
         })
 }
 
-function setNextRoomEvent(state) {
-    const {player, dungeon} = state;
-    
+function setRoomControlEvent(state) {
+    const { player, dungeon } = state;
+
     document.querySelector(".room-next")
         .addEventListener('click', (e) => {
             player.canUsePotion = true;
             const nextRoom = getNextRoom(dungeon);
-            console.log(nextRoom);
             updateRoom(nextRoom, dungeon.canSkip);
+        })
+
+    document.querySelector(".room-skip")
+        .addEventListener('click', (e) => {
+            player.canUsePotion = true;
+            const nextRoom = getNextRoom(dungeon);
+            updateRoom(nextRoom, dungeon.canSkip);
+        });
+}
+
+function setGameOverEvent(state) {
+    const { player, dungeon } = state;
+
+    document.querySelector(".content")
+        .addEventListener("game-over", (e) => {
+            console.log("Game Over!");
+            updateGameOverState(state);
         })
 }

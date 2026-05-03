@@ -16,7 +16,7 @@ export function getNextRoom(dg) {
         dg.nextRoom = [...cardsLeft, ...next];
     } else if (roomLength == ROOM_SIZE && dg.canSkip) {
         dg.canSkip = false;
-        dg.elements.push(...dg.nextRoom);
+        dg.elements.push(dg.nextRoom);
         dg.nextRoom = dg.elements.splice(0, ROOM_SIZE);
     }
     return dg.nextRoom;
