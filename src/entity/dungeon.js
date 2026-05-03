@@ -27,7 +27,7 @@ export function createDungeon() {
         for (let j = 0; j < DECK.ranks.length; j++) {
             if ((DECK.suits[i] == "♥️" || DECK.suits[i] == "♦️")
                 && SKIP_FROM.includes(DECK.ranks[j])) continue;
-            elements.push({ suit: DECK.suits[i], rank: DECK.ranks[j] });
+            elements.push({ suit: DECK.suits[i], rank: DECK.ranks[j], interacted: false });
         }
     }
     for (let i = 0; i < 1000; i++) {
@@ -39,7 +39,6 @@ export function createDungeon() {
         elements,
         canSkip: true,
         nextRoom: [],
-        interacted: []
     };
     getNextRoom(dungeon);
     return dungeon;
