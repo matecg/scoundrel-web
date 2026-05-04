@@ -43,24 +43,11 @@ export default function createGameUI() {
     roomContainer.appendChild(nextRoomBtn);
     roomContainer.appendChild(skipRoomBtn);
 
-    const gameOverContainer = document.createElement("div");
-    gameOverContainer.classList.add("game-over");
-
-    const gameOverParagraph = document.createElement("p");
-    gameOverParagraph.textContent = "GAME OVER!";
-
-    const playAgainButton = document.createElement("button");
-    playAgainButton.textContent = "Play again";
-    gameOverContainer.appendChild(gameOverParagraph);
-    gameOverContainer.appendChild(playAgainButton);
-    gameOverContainer.style.display = "none";
-
     container.appendChild(playerPara);
     container.appendChild(healthPara);
     container.appendChild(weaponPara);
     container.appendChild(durabilityPara);
     container.appendChild(roomContainer);
-    container.appendChild(gameOverContainer);
     container.appendChild(selectedContainer);
 
     createEntitySelectionUI(selectedContainer);

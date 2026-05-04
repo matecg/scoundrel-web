@@ -1,4 +1,9 @@
+import { createDungeon } from "../entity/dungeon.js";
+import { createPlayer } from "../entity/player.js";
 import { capitalize, getEntityAndValue, getEntityLabel, MAX_HEALTH, ROOM_SIZE } from "../misc/helpers.js";
+import createGameUI from "./createUI.js";
+import setGameEvents from "./eventsUI.js";
+import buildGameOverUI from "./gameOverUI.js";
 
 /**
  * Update all UI components of the game at once.
@@ -118,7 +123,16 @@ export function updateEntitySelection(entityCard, canUseWeapon) {
 }
 
 export function updateGameOverState(state) {
+    buildGameOverUI();
     document.querySelector(".selected").style.display = "none";
-    document.querySelector(".room").style.display = "none";
-    document.querySelector(".game-over").style.display = "block";
+}
+
+export function playGame(username) {
+    const player = createPlayer(username);
+    const dungeon = createDungeon();
+    const state = {player, dungeon};
+
+    createGameUI();
+    setGameEvents(state);
+    updateAllUI(state);
 }

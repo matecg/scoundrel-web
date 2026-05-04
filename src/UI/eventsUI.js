@@ -1,7 +1,7 @@
 import { getNextRoom } from "../entity/dungeon.js";
 import { canUseWeapon } from "../entity/player.js";
 import { getEntityAndValue, getEntityFromLabel, MAX_HEALTH } from "../misc/helpers.js";
-import { updateEntitySelection, updateGameOverState, updatePlayerHealth, updateRoom, updateWeapon } from "./updateUI.js";
+import { playGame, updateEntitySelection, updateGameOverState, updatePlayerHealth, updateRoom, updateWeapon } from "./updateUI.js";
 
 export default function setGameEvents(state) {
     setEntitySelectionEvent(state);
@@ -59,6 +59,7 @@ function setEntityInteractionEvent(state) {
                             bubbles: true,
                         });
                         e.target.dispatchEvent(gameOverEvent);
+                        return;
                     }
                     break;
             }
@@ -86,6 +87,7 @@ function setEntityInteractionEvent(state) {
                     bubbles: true,
                 });
                 e.target.dispatchEvent(gameOverEvent);
+                return;
             }
         })
 }
@@ -113,7 +115,11 @@ function setGameOverEvent(state) {
 
     document.querySelector(".content")
         .addEventListener("game-over", (e) => {
-            console.log("Game Over!");
             updateGameOverState(state);
-        })
+
+            document.querySelector(".play-again-button")
+                .addEventListener("click", (e) => {
+                    playGame(state.player.name);
+                })
+        });
 }
