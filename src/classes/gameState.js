@@ -32,7 +32,8 @@ export default class GameState {
         });
         return {
             room: safeRoom,
-            canSkip: this.#dungeon.canSkip
+            canSkip: this.#dungeon.canSkip,
+            score: this.#dungeon.getScore()
         }
     }
 

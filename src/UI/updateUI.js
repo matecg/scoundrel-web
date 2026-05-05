@@ -45,18 +45,18 @@ export function updateWeapon(weapon) {
         weaponDmgParagraph.textContent = "Weapon Damage: 0 (unarmed)";
         return;
     }
-    
+
     const durabilityParagraph = document.querySelector(".weapon-durability");
-    weaponDmgParagraph.textContent =  `${weapon.damage} damage`;
+    weaponDmgParagraph.textContent = `${weapon.damage} damage`;
     if (weapon.durability.length > 0) {
         durabilityParagraph.textContent = "Defeated: ";
         weapon.durability.forEach((value, i) => {
-            durabilityParagraph.textContent += i < weapon.durability.length - 1 
-            ? `${value}, ` 
-            : `${value}.`
+            durabilityParagraph.textContent += i < weapon.durability.length - 1
+                ? `${value}, `
+                : `${value}.`
         });
     } else {
-         durabilityParagraph.textContent = "";
+        durabilityParagraph.textContent = "";
     }
 }
 
@@ -73,7 +73,7 @@ export function updateRoom(room, canSkip) {
         next.dataset["type"] = room[i].type;
         next.dataset["value"] = room[i].value;
         next.dataset["index"] = i;
-        
+
         next.disabled = roomLength === 1 || room[i].interacted;
         next.textContent = room[i].label;
     }
@@ -85,7 +85,7 @@ export function updateRoom(room, canSkip) {
     document.querySelector(".selected").style.display = "none";
 }
 
-export function updateEntitySelection({type, value, index}, canUseWeapon = false) {
+export function updateEntitySelection({ type, value, index }, canUseWeapon = false) {
     const nameParagraph = document.querySelector(".entity-name");
     const valueParagraph = document.querySelector(".entity-value");
     const interactButton = document.querySelector(".interact-button");
@@ -123,8 +123,9 @@ export function updateEntitySelection({type, value, index}, canUseWeapon = false
     document.querySelector(".selected").style.display = "block";
 }
 
-export function updateGameOverState() {
-   buildGameOverUI();
+export function updateGameOverState(score) {
+    buildGameOverUI();
+    document.querySelector(".score").textContent = `Your score: ${score}`;
     document.querySelector(".selected").style.display = "none";
 }
 

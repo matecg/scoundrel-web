@@ -74,6 +74,21 @@ export default class Dungeon {
         return this.#room.filter(ent => ent.interacted).length;
     }
 
+    getScore() {
+        let score = 0;
+        const leftCreatures = this.#entities.filter(ent => ent.type === "creature");
+        for (const creature of leftCreatures) {
+            score -= creature.value;
+        }
+        if (leftCreatures.length == 1 || leftCreatures.length == 0) {
+            const lastCard = this.#entities.find(ent => !ent.interacted);
+            if (lastCard.type == "potion") {
+                score += lastCard.value;
+            }
+        }
+        return score;
+    }
+
     /**
      * Draft new not interacted entities from the dungeon deck.
      * @param {number} amount - The number of new entities.
