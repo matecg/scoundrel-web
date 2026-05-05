@@ -1,7 +1,4 @@
-// import { getEntityAndValue, getEntityFromLabel, MAX_HEALTH } from "../misc/helpers.js";
-// import { playGame, updateEntitySelection, updateGameOverState, updatePlayerHealth, updateRoom, updateWeapon } from "./updateUI.js";
-
-import { updateAllUI, updateEntitySelection } from "./updateUI.js";
+import { updateAllUI, updateEntitySelection, updateRoom } from "./updateUI.js";
 
 /**
  * Program the events require for the game into the HTML elements.
@@ -10,7 +7,7 @@ import { updateAllUI, updateEntitySelection } from "./updateUI.js";
 export default function setGameEvents(state) {
     setEntitySelectionEvent(state);
     setEntityInteractionEvent(state);
-    // setRoomControlEvent(state);
+    setRoomControlEvent(state);
     // setGameOverEvent(state);
 }
 
@@ -57,23 +54,24 @@ function setEntityInteractionEvent(state) {
         });
 }
 
-// function setRoomControlEvent(state) {
-//     const { player, dungeon } = state;
+/**
+ * Set the events for Skip Room and Next Room buttons.
+ * @param {import ("../classes/gameState.js").default} state 
+ */
+function setRoomControlEvent(state) {
+    
+    document.querySelector(".room-next")
+        .addEventListener('click', (e) => {
+            state.runTurn({type:"next"});
+            updateRoom(state.dungeon.room, state.dungeon.canSkip);
+        })
 
-//     document.querySelector(".room-next")
-//         .addEventListener('click', (e) => {
-//             player.canUsePotion = true;
-//             const nextRoom = getNextRoom(dungeon);
-//             updateRoom(nextRoom, dungeon.canSkip);
-//         })
-
-//     document.querySelector(".room-skip")
-//         .addEventListener('click', (e) => {
-//             player.canUsePotion = true;
-//             const nextRoom = getNextRoom(dungeon);
-//             updateRoom(nextRoom, dungeon.canSkip);
-//         });
-// }
+    document.querySelector(".room-skip")
+        .addEventListener('click', (e) => {
+            state.runTurn({type:"skip"});
+            updateRoom(state.dungeon.room, state.dungeon.room);
+        });
+}
 
 // function setGameOverEvent(state) {
 //     const { player, dungeon } = state;
