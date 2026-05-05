@@ -1,4 +1,5 @@
-import { updateAllUI, updateEntitySelection, updateRoom } from "./updateUI.js";
+import { playGame } from "./startUI.js";
+import { updateAllUI, updateEntitySelection, updateGameOverState, updateRoom } from "./updateUI.js";
 
 /**
  * Program the events require for the game into the HTML elements.
@@ -8,7 +9,7 @@ export default function setGameEvents(state) {
     setEntitySelectionEvent(state);
     setEntityInteractionEvent(state);
     setRoomControlEvent(state);
-    // setGameOverEvent(state);
+    setGameOverEvent(state);
 }
 
 /**
@@ -44,6 +45,9 @@ function setEntityInteractionEvent(state) {
             const {value, index} = e.target.dataset;
             state.runTurn({type: "interact", data: {index}})
             updateAllUI(state);
+            if (state.isGameOver()) {
+                e.target.dispatchEvent(new CustomEvent("game-over", {bubbles:true}));
+            }
         });
 
     document.querySelector(".extra-button")
@@ -51,6 +55,9 @@ function setEntityInteractionEvent(state) {
             const {value, index} = e.target.dataset;
             state.runTurn({type: "interact", data: {index, useWeapon: true}});
             updateAllUI(state);
+            if (state.isGameOver()) {
+                e.target.dispatchEvent(new CustomEvent("game-over", {bubbles:true}));
+            }
         });
 }
 
@@ -73,16 +80,18 @@ function setRoomControlEvent(state) {
         });
 }
 
-// function setGameOverEvent(state) {
-//     const { player, dungeon } = state;
+/**
+ * Stop the game when it's over.
+ * @param {import ("../classes/gameState.js").default} state 
+ */
+function setGameOverEvent(state) {
+    document.querySelector(".content")
+        .addEventListener("game-over", (e) => {
+            updateGameOverState();
 
-//     document.querySelector(".content")
-//         .addEventListener("game-over", (e) => {
-//             updateGameOverState(state);
-
-//             document.querySelector(".play-again-button")
-//                 .addEventListener("click", (e) => {
-//                     playGame(state.player.name);
-//                 })
-//         });
-// }
+            document.querySelector(".play-again-button")
+                .addEventListener("click", (e) => {
+                    playGame(state.player.name);
+                })
+        });
+}

@@ -1,8 +1,13 @@
+import GameState from "../classes/gameState.js";
+import createGameUI from "./createUI.js";
+import setGameEvents from "./eventsUI.js";
+import { updateAllUI } from "./updateUI.js";
+
 /**
  * Assign events to initial page game buttons "Start" and "Rules".
  * @param {Function} onGameStart - Callback function called when game start
  */
-export default function setGameStartEvents(onGameStart) {
+export function setGameStartEvents(onGameStart) {
     document.querySelector(".start-btn")
         .addEventListener('click', (e) => {
             const username = document.querySelector("#username").value;
@@ -20,4 +25,13 @@ export default function setGameStartEvents(onGameStart) {
         .addEventListener('click', () => {
             document.querySelector('.rules').close();
         })
+}
+
+
+export function playGame(username) {
+    const state = new GameState(username);
+
+    createGameUI();
+    setGameEvents(state);
+    updateAllUI(state);
 }

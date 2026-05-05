@@ -1,6 +1,7 @@
 import Entity from "../classes/entity.js";
 import { capitalize } from "../misc/helpers.js";
 import { MAX_HEALTH, ROOM_SIZE } from "../misc/constants.js";
+import buildGameOverUI from "./gameOverUI.js";
 
 /**
  * Update all UI components of the game at once.
@@ -122,17 +123,8 @@ export function updateEntitySelection({type, value, index}, canUseWeapon = false
     document.querySelector(".selected").style.display = "block";
 }
 
-// export function updateGameOverState(state) {
-//     buildGameOverUI();
-//     document.querySelector(".selected").style.display = "none";
-// }
+export function updateGameOverState() {
+   buildGameOverUI();
+    document.querySelector(".selected").style.display = "none";
+}
 
-// export function playGame(username) {
-//     const player = createPlayer(username);
-//     const dungeon = createDungeon();
-//     const state = {player, dungeon};
-
-//     createGameUI();
-//     setGameEvents(state);
-//     updateAllUI(state);
-// }
