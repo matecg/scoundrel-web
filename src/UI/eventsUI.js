@@ -1,125 +1,90 @@
-import { getNextRoom } from "../entity/dungeon.js";
-import { canUseWeapon } from "../entity/player.js";
-import { getEntityAndValue, getEntityFromLabel, MAX_HEALTH } from "../misc/helpers.js";
-import { playGame, updateEntitySelection, updateGameOverState, updatePlayerHealth, updateRoom, updateWeapon } from "./updateUI.js";
+// import { getEntityAndValue, getEntityFromLabel, MAX_HEALTH } from "../misc/helpers.js";
+// import { playGame, updateEntitySelection, updateGameOverState, updatePlayerHealth, updateRoom, updateWeapon } from "./updateUI.js";
 
+import { updateAllUI, updateEntitySelection } from "./updateUI.js";
+
+/**
+ * Program the events require for the game into the HTML elements.
+ * @param {import ("../classes/gameState.js").default} state - Current game state
+ */
 export default function setGameEvents(state) {
     setEntitySelectionEvent(state);
     setEntityInteractionEvent(state);
-    setRoomControlEvent(state);
-    setGameOverEvent(state);
+    // setRoomControlEvent(state);
+    // setGameOverEvent(state);
 }
 
+/**
+ * Event fired when a game card is clicked, before being interacted with.
+ * @param {import ("../classes/gameState.js").default} state - Current game state
+ */
 function setEntitySelectionEvent(state) {
-    const { player, dungeon } = state;
+    const { player } = state;
     const roomButtons = document.querySelectorAll(".entity");
 
-    function onEntityClick(e) {
-        const entityCard = getEntityFromLabel(e.target.dataset["entity"]);
-        const entity = getEntityAndValue(entityCard);
-        updateEntitySelection(entityCard, canUseWeapon(player.weapon, entity.value));
-    }
-
     for (const btn of roomButtons) {
-        btn.addEventListener('click', onEntityClick);
+        btn.addEventListener('click', (e) => {
+            const { type, value, index } = e.target.dataset;
+            let canUseWeapon = false;
+
+            if (type === "creature") {
+                canUseWeapon = player.canUseWeapon(value);
+            }
+            updateEntitySelection({ type, value: +value, index: +index }, canUseWeapon);
+        });
     }
 }
 
+/**
+ * Main game function that interacts with a card from the current room.
+ * @param {import ("../classes/gameState.js").default} state - Current game state 
+ */
 function setEntityInteractionEvent(state) {
     const { player, dungeon } = state;
 
     document.querySelector(".interact-button")
         .addEventListener('click', (e) => {
-            const data = e.target.dataset;
-            const entityName = data["name"];
-            const value = +data["value"];
-            const entityCard = { suit: data["suit"], rank: data["rank"] };
-
-            dungeon.nextRoom.find(card => card.suit === entityCard.suit
-                && card.rank === entityCard.rank).interacted = true;
-
-            switch (entityName) {
-                case "potion":
-                    if (!player.canUsePotion) break;
-                    console.log(player.health + value);
-                    player.health = Math.min(MAX_HEALTH, player.health + value);
-                    player.canUsePotion = false;
-                    updatePlayerHealth(player.health);
-                    break;
-                case "weapon":
-                    player.weapon.value = value;
-                    player.weapon.durability = [];
-                    updateWeapon(player.weapon);
-                    break;
-                case "creature":
-                    player.health = Math.max(0, player.health - value);
-                    updatePlayerHealth(player.health);
-                    if (player.health == 0) {
-                        const gameOverEvent = new CustomEvent("game-over", {
-                            bubbles: true,
-                        });
-                        e.target.dispatchEvent(gameOverEvent);
-                        return;
-                    }
-                    break;
-            }
-            updateRoom(dungeon.nextRoom, dungeon.canSkip);
+            const {value, index} = e.target.dataset;
+            state.runTurn({type: "interact", data: {index}})
+            updateAllUI(state);
         });
 
     document.querySelector(".extra-button")
         .addEventListener('click', (e) => {
-            const data = e.target.dataset;
-            const value = data["value"];
-            const entityCard = { suit: data["suit"], rank: data["rank"] };
-
-            dungeon.nextRoom.find(card => card.suit === entityCard.suit
-                && card.rank === entityCard.rank).interacted = true;
-            const damage = Math.max(0, value - player.weapon.value);
-            player.health = Math.max(0, player.health - damage);
-            player.weapon.durability.push(value);
-
-            updatePlayerHealth(player.health);
-            updateWeapon(player.weapon);
-            updateRoom(dungeon.nextRoom);
-
-            if (player.health == 0) {
-                const gameOverEvent = new CustomEvent("game-over", {
-                    bubbles: true,
-                });
-                e.target.dispatchEvent(gameOverEvent);
-                return;
-            }
-        })
-}
-
-function setRoomControlEvent(state) {
-    const { player, dungeon } = state;
-
-    document.querySelector(".room-next")
-        .addEventListener('click', (e) => {
-            player.canUsePotion = true;
-            const nextRoom = getNextRoom(dungeon);
-            updateRoom(nextRoom, dungeon.canSkip);
-        })
-
-    document.querySelector(".room-skip")
-        .addEventListener('click', (e) => {
-            player.canUsePotion = true;
-            const nextRoom = getNextRoom(dungeon);
-            updateRoom(nextRoom, dungeon.canSkip);
+            const {value, index} = e.target.dataset;
+            state.runTurn({type: "interact", data: {index, useWeapon: true}});
+            updateAllUI(state);
         });
 }
 
-function setGameOverEvent(state) {
-    const { player, dungeon } = state;
+// function setRoomControlEvent(state) {
+//     const { player, dungeon } = state;
 
-    document.querySelector(".content")
-        .addEventListener("game-over", (e) => {
-            updateGameOverState(state);
+//     document.querySelector(".room-next")
+//         .addEventListener('click', (e) => {
+//             player.canUsePotion = true;
+//             const nextRoom = getNextRoom(dungeon);
+//             updateRoom(nextRoom, dungeon.canSkip);
+//         })
 
-            document.querySelector(".play-again-button")
-                .addEventListener("click", (e) => {
-                    playGame(state.player.name);
-                })
-        });
-}
+//     document.querySelector(".room-skip")
+//         .addEventListener('click', (e) => {
+//             player.canUsePotion = true;
+//             const nextRoom = getNextRoom(dungeon);
+//             updateRoom(nextRoom, dungeon.canSkip);
+//         });
+// }
+
+// function setGameOverEvent(state) {
+//     const { player, dungeon } = state;
+
+//     document.querySelector(".content")
+//         .addEventListener("game-over", (e) => {
+//             updateGameOverState(state);
+
+//             document.querySelector(".play-again-button")
+//                 .addEventListener("click", (e) => {
+//                     playGame(state.player.name);
+//                 })
+//         });
+// }

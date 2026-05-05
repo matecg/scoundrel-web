@@ -1,22 +1,18 @@
-import { createDungeon } from "../entity/dungeon.js";
-import { createPlayer } from "../entity/player.js";
-import { capitalize, getEntityAndValue, getEntityLabel, MAX_HEALTH, ROOM_SIZE } from "../misc/helpers.js";
-import createGameUI from "./createUI.js";
-import setGameEvents from "./eventsUI.js";
-import buildGameOverUI from "./gameOverUI.js";
+import Entity from "../classes/entity.js";
+import { capitalize } from "../misc/helpers.js";
+import { MAX_HEALTH, ROOM_SIZE } from "../misc/constants.js";
 
 /**
  * Update all UI components of the game at once.
- * @param {{player: any, dungeon: any}} state - Current state of the game
+ * @param {{player: Object, dungeon: Object}} state - Current state of the game
  */
-export function updateAllUI(state) {
-    const { player, dungeon } = state;
+export function updateAllUI({ player, dungeon }) {
     if (!player || !dungeon) return;
 
     updatePlayerName(player.name);
     updatePlayerHealth(player.health);
     updateWeapon(player.weapon);
-    updateRoom(dungeon.nextRoom, dungeon.canSkip);
+    updateRoom(dungeon.room, dungeon.canSkip);
 }
 
 /**
@@ -34,18 +30,23 @@ export function updatePlayerName(name) {
  */
 export function updatePlayerHealth(newValue) {
     const healthParagraph = document.querySelector(".player-health");
-    const oldValue = healthParagraph.textContent
     healthParagraph.textContent = `Health: ${newValue}/${MAX_HEALTH}`;
 }
 
 /**
  * Updates the HTML representation for player's current weapon.
- * @param {{value: number, durability: number[]}} weapon - An weapon object
+ * @param {{damage: number, durability: number[]}} weapon - An weapon object
  */
 export function updateWeapon(weapon) {
     const weaponDmgParagraph = document.querySelector(".weapon-value");
-    weaponDmgParagraph.textContent = weapon.value ? `${weapon.value} damage` : "Weapon Damage: 0 (unarmed)";
+
+    if (!weapon) {
+        weaponDmgParagraph.textContent = "Weapon Damage: 0 (unarmed)";
+        return;
+    }
+    
     const durabilityParagraph = document.querySelector(".weapon-durability");
+    weaponDmgParagraph.textContent =  `${weapon.damage} damage`;
     if (weapon.durability.length > 0) {
         durabilityParagraph.textContent = "Defeated: ";
         weapon.durability.forEach((value, i) => {
@@ -60,19 +61,20 @@ export function updateWeapon(weapon) {
 
 /**
  * Update the room the entities and room control buttons, Next and Skip.
- * @param {{suit: string, rank: string}[]} room - A 4 size array of entities
+ * @param {import ("../classes/entity.js").default[]} room - A 4 size array of entities
  * @param {boolean} canSkip 
  */
 export function updateRoom(room, canSkip) {
     const entityButtons = document.querySelectorAll(".entity");
-    const entityLabels = room.map(getEntityLabel);
     const roomLength = room.filter(entity => !entity.interacted).length;
     for (let i = 0; i < ROOM_SIZE; i++) {
         const next = entityButtons[i];
-        next.dataset["entity"] = entityLabels[i];
+        next.dataset["type"] = room[i].type;
+        next.dataset["value"] = room[i].value;
+        next.dataset["index"] = i;
         
         next.disabled = roomLength === 1 || room[i].interacted;
-        next.textContent = entityLabels[i];
+        next.textContent = room[i].label;
     }
 
     const nextBtn = document.querySelector(".room-next");
@@ -82,23 +84,21 @@ export function updateRoom(room, canSkip) {
     document.querySelector(".selected").style.display = "none";
 }
 
-export function updateEntitySelection(entityCard, canUseWeapon) {
-    const { name, value } = getEntityAndValue(entityCard);
+export function updateEntitySelection({type, value, index}, canUseWeapon = false) {
     const nameParagraph = document.querySelector(".entity-name");
     const valueParagraph = document.querySelector(".entity-value");
     const interactButton = document.querySelector(".interact-button");
     const extraButton = document.querySelector(".extra-button");
 
     extraButton.style.display = "none";
-    nameParagraph.textContent = capitalize(name);
-    [interactButton, extraButton].forEach(btn => {
-        btn.dataset["name"] = name;
+    nameParagraph.textContent = capitalize(type);
+    [interactButton, extraButton].forEach((btn) => {
+        btn.dataset["type"] = type;
         btn.dataset["value"] = value;
-        btn.dataset["suit"] = entityCard.suit;
-        btn.dataset["rank"] = entityCard.rank;
+        btn.dataset["index"] = index;
     });
 
-    switch (name) {
+    switch (type) {
         case "potion":
             valueParagraph.textContent = `Heals for ${value} points`
             interactButton.textContent = "Drink";
@@ -122,17 +122,17 @@ export function updateEntitySelection(entityCard, canUseWeapon) {
     document.querySelector(".selected").style.display = "block";
 }
 
-export function updateGameOverState(state) {
-    buildGameOverUI();
-    document.querySelector(".selected").style.display = "none";
-}
+// export function updateGameOverState(state) {
+//     buildGameOverUI();
+//     document.querySelector(".selected").style.display = "none";
+// }
 
-export function playGame(username) {
-    const player = createPlayer(username);
-    const dungeon = createDungeon();
-    const state = {player, dungeon};
+// export function playGame(username) {
+//     const player = createPlayer(username);
+//     const dungeon = createDungeon();
+//     const state = {player, dungeon};
 
-    createGameUI();
-    setGameEvents(state);
-    updateAllUI(state);
-}
+//     createGameUI();
+//     setGameEvents(state);
+//     updateAllUI(state);
+// }

@@ -41,7 +41,8 @@ export default class GameState {
         return {
             name: this.#player.name,
             weapon,
-            health: this.#player.health
+            health: this.#player.health,
+            canUseWeapon: (creatureValue) => this.#player.canUseWeapon(creatureValue)
         }
     }
 
@@ -72,7 +73,7 @@ export default class GameState {
     }
 
     #interactWithEntity(data) {
-        const entity = this.#dungeon.room[data.index];
+        const entity = this.#dungeon.room[+data.index];
         switch (entity.type) {
             case "potion":
                 const succeed = this.#player.drinkPotion(entity.value);
