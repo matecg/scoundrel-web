@@ -61,6 +61,7 @@ export default class Player {
         let damage = strength;
         if (useWeapon && this.canUseWeapon(strength)) {
             damage = Math.max(0, damage - this.#weapon.damage);
+            this.#weapon.durability.push(strength);
         }
         this.health = Math.max(0, this.health - damage);
     }
@@ -73,7 +74,7 @@ export default class Player {
         if (!this.#weapon) return false;
 
         const lastCreature = this.#weapon.durability.at(-1);
-        if (isNaN(+lastCreature)) return false;
+        if (isNaN(+lastCreature)) return true;
         return +lastCreature > creatureStrength;
     }
 }
