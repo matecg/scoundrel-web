@@ -1,4 +1,4 @@
-import { capitalize, DECK, getEntityAndValue, getEntityFromLabel, MAX_HEALTH, ROOM_SIZE } from "../misc/helpers.js";
+import { MAX_HEALTH, ROOM_SIZE } from "../misc/constants.js";
 
 /**
  * Create the HTML elements for the scoundrel game.
