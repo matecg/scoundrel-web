@@ -1,6 +1,6 @@
 import { DECK } from "../misc/constants.js";
 
-export default class Entity {
+export default class EntityCard {
     constructor(suit, rank) {
         this.suit = suit;
         this.rank = rank;
@@ -12,6 +12,7 @@ export default class Entity {
 
     #setValue() {
         const idx = DECK.ranks.findIndex(r => r === this.rank);
+        if (idx == -1) return idx;
         return idx + 2;
     }
 
@@ -25,7 +26,7 @@ export default class Entity {
             case "♣️":
                 return "creature";
             default:
-                throw new Error("Invalid entity type");
+                return "none";
         }
     }
 }
