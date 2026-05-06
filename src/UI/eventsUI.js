@@ -38,7 +38,6 @@ function setEntitySelectionEvent(state) {
  * @param {import ("../classes/gameState.js").default} state - Current game state 
  */
 function setEntityInteractionEvent(state) {
-    const { player, dungeon } = state;
 
     document.querySelector(".interact-button")
         .addEventListener('click', (e) => {

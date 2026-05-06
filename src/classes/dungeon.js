@@ -76,7 +76,7 @@ export default class Dungeon {
 
     getScore() {
         let score = 0;
-        const leftCreatures = this.#entities.filter(ent => ent.type === "creature");
+        const leftCreatures = this.#entities.filter(ent => ent.type === "creature" && !ent.interacted);
         for (const creature of leftCreatures) {
             score -= creature.value;
         }

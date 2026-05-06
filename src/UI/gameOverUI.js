@@ -18,5 +18,6 @@ export default function buildGameOverUI() {
     gameOverContainer.appendChild(scoreParagraph);
     gameOverContainer.appendChild(playAgainButton);
 
+    if (!room) return;
     room.parentElement.replaceChild(gameOverContainer, room);
 }

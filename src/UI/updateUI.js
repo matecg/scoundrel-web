@@ -5,15 +5,17 @@ import buildGameOverUI from "./gameOverUI.js";
 
 /**
  * Update all UI components of the game at once.
- * @param {{player: Object, dungeon: Object}} state - Current state of the game
+ * @param {import ("../classes/gameState.js").default} state - Current state of the game
  */
-export function updateAllUI({ player, dungeon }) {
+export function updateAllUI(state) {
+    const { player, dungeon } = state;
     if (!player || !dungeon) return;
-
+    console.log(dungeon);
     updatePlayerName(player.name);
     updatePlayerHealth(player.health);
     updateWeapon(player.weapon);
     updateRoom(dungeon.room, dungeon.canSkip);
+    updateCompletion(state.donePercentage);
 }
 
 /**
@@ -83,6 +85,14 @@ export function updateRoom(room, canSkip) {
     nextBtn.disabled = roomLength !== 1;
     skipBtn.disabled = !(roomLength === ROOM_SIZE) || !canSkip;
     document.querySelector(".selected").style.display = "none";
+}
+
+/**
+ * Updates the dungeon percentage paragraph with latest value.
+ * @param {string} completion - Current completion provided by the state
+ */
+export function updateCompletion(completion) {
+    document.querySelector(".completion").textContent = completion;
 }
 
 export function updateEntitySelection({ type, value, index }, canUseWeapon = false) {

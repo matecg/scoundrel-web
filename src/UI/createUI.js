@@ -29,6 +29,10 @@ export default function createGameUI() {
     const durabilityPara = document.createElement("p");
     durabilityPara.classList.add("weapon-durability");
 
+    const completionPara = document.createElement("p");
+    completionPara.classList.add("completion");
+    completionPara.textContent = "0%";
+
     const selectedContainer = document.createElement("div");
     selectedContainer.classList.add("selected");
 
@@ -47,6 +51,7 @@ export default function createGameUI() {
     container.appendChild(healthPara);
     container.appendChild(weaponPara);
     container.appendChild(durabilityPara);
+    container.appendChild(completionPara);
     container.appendChild(roomContainer);
     container.appendChild(selectedContainer);
 
