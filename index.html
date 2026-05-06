@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Scoundrel</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -15,33 +16,33 @@
       <input type="text" name="username" id="username">
       <span class="input-feedback"></span>
     </div>
-    <div>
+    <div class="start-btns">
       <button class="start-btn">Start</button>
       <button class="rules-btn">Rules</button>
     </div>
     <dialog closedby="any" class="rules">
       <h2>Rules</h2>
-      <p>Each suit represent a special dungeon element. To either aid or harm you.</p>
-      <p>Your <strong>goal</strong> is to explore all the dungeon's rooms and survive them all.</p>
-      <p>You will lose if your health reaches zero.</p>
+      <p>👉 Each suit represent a special dungeon entity. To either aid or harm you.</p>
+      <p>👉 Your <strong class="highlight">goal</strong> is to explore all the dungeon's rooms and survive them all.</p>
+      <p>👉 You will lose if your health reaches zero.</p>
       <ul>
         <li>Rooms:
           <ul>
             <li>Are represented by the 4 topmost cards from the deck.</li>
             <li>You must choose and interact with 3 of them in order to complete a room.</li>
             <li>The left over card will be carried into the next room.</li>
-            <li>You may also <strong>Skip</strong> a room entirely, sending those cards to the bottom of the deck.</li>
-            <li>But, you may <strong>not</strong> skip two rooms in a roll.</li>
+            <li>You may also <strong class="highlight">Skip</strong> a room entirely, sending those cards to the bottom of the deck.</li>
+            <li>But, you may <strong class="highlight">not</strong> skip two rooms in a roll.</li>
           </ul>
         </li>
-        <li>♥️ Hearts represent <strong>Potions</strong>:
+        <li><span class="suit">♥️</span> Hearts represent <strong class="highlight">Potions</strong>:
           <ul>
             <li>Range from rank 2 to 10.</li>
             <li>Can be used only once per room.</li>
             <li>Additional potions consumed on the same room will simply be discarded.</li>
           </ul>
         </li>
-        <li>♦️ Diamonds represent <strong>Weapons:</strong>
+        <li><span class="suit">♦️</span> Diamonds represent <strong class="highlight">Weapons:</strong>
           <ul>
             <li>Range from rank 2 to 10.</li>
             <li>Used in combat against creatures to lower the damage received.</li>
@@ -51,7 +52,7 @@
             <li>You may always fight barehanded, taking all the damage from the creature to defeat it.</li>
           </ul>
         </li>
-        <li>♣️|♠️ Clubs & Spades represent <strong>Monsters</strong>:
+        <li><span class="suit">♣️|♠️</span> Clubs & Spades represent <strong class="highlight">Creatures</strong>:
           <ul>
             <li>Range from rank 2 to Ace.</li>
             <li>A monster power is represented by the card value.</li>
@@ -59,11 +60,14 @@
           </ul>
         </li>
       </ul>
-      <p>Your final score starts at zero and gets deduced by the value of each creature you haven't defeated.</p>
-      <p>Alternatively, it will be increased by the remaining health points.</p>
-      <p>Also, if your last card, left in the dungeon, is a potion, its value will be added to your final score.</p>
-      <p>That way the maximum score achievable is: 30 (20 points from health + 10 points from a non-used potion)</p>
-      <p><em>Be wary, be smart. Best of luck!</em></p>
+
+      <div class="final-rules">
+        <p>Your final score starts at zero and gets deduced by the value of each creature you haven't defeated.</p>
+        <p>Alternatively, it will be increased by the remaining health points.</p>
+        <p>Also, if your last card, left in the dungeon, is a potion, its value will be added to your final score.</p>
+        <p>That way the maximum score achievable is: 30 (20 points from health + 10 points from a non-used potion)</p>
+        <p><em>Be wary, be smart. Best of luck!</em></p>
+      </div>
       <button>Close</button>
     </dialog>
   </div>
