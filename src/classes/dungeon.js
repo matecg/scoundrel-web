@@ -3,7 +3,7 @@ import { shuffleInPlace } from "../misc/helpers.js";
 import Entity from "./entity.js";
 
 export default class Dungeon {
-    #entities; 
+    #entities;
     #canSkip;
     #room;
 
@@ -30,7 +30,7 @@ export default class Dungeon {
      * @returns {Entity[]}
      */
     getNextRoom() {
-        if (this.interactedInRoom() < (ROOM_SIZE - 1)) return [];
+        if (this.#interactedInRoom() < (ROOM_SIZE - 1)) return [];
 
         this.#canSkip = true;
         const newEntities = this.#draftEntities(ROOM_SIZE - 1);
@@ -45,7 +45,7 @@ export default class Dungeon {
      */
     skipRoom() {
         if (!this.#canSkip
-            || this.interactedInRoom() !== 0
+            || this.#interactedInRoom() !== 0
         ) return [];
 
         this.#canSkip = false;
@@ -66,27 +66,25 @@ export default class Dungeon {
         return interacted.length / this.#entities.length;
     }
 
+    getScore() {
+        let score = 0;
+        const leftCards = this.#entities.filter(ent =>  !ent.interacted);
+        for (const card of leftCards) {
+            if (card.type === "creature")
+                score -= card.value;
+        }
+        if (leftCards.length == 1 && leftCards[0].type === "potion") {
+            score += lastCard.value;
+        }
+        return score;
+    }
+
     /**
      * Return the number of cards already interacted in the current room.
      * @returns {number}
      */
-    interactedInRoom() {
+    #interactedInRoom() {
         return this.#room.filter(ent => ent.interacted).length;
-    }
-
-    getScore() {
-        let score = 0;
-        const leftCreatures = this.#entities.filter(ent => ent.type === "creature" && !ent.interacted);
-        for (const creature of leftCreatures) {
-            score -= creature.value;
-        }
-        if (leftCreatures.length == 1 || leftCreatures.length == 0) {
-            const lastCard = this.#entities.find(ent => !ent.interacted);
-            if (lastCard.type == "potion") {
-                score += lastCard.value;
-            }
-        }
-        return score;
     }
 
     /**
@@ -97,7 +95,7 @@ export default class Dungeon {
     #draftEntities(amount = ROOM_SIZE) {
         const next = [];
         for (const entity of this.#entities) {
-            if (!entity.interacted && !this.#room.includes(entity)) 
+            if (!entity.interacted && !this.#room.includes(entity))
                 next.push(entity);
             if (next.length === amount) break;
         }
