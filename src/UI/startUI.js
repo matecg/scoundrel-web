@@ -17,14 +17,6 @@ export function setGameStartEvents(onGameStart) {
             }
             onGameStart(username);
         });
-    document.querySelector(".rules-btn")
-        .addEventListener('click', () => {
-            document.querySelector(".rules").showModal();
-        });
-    document.querySelector(".rules > button")
-        .addEventListener('click', () => {
-            document.querySelector('.rules').close();
-        })
 
     if (
         window.matchMedia &&

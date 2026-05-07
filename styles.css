@@ -16,16 +16,24 @@ body {
 h1,
 h2 {
     color: var(--primary);
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+h2 {
+    font-size: 2rem;
 }
 
 input,
-button {
+button,
+.fake-button {
     padding: 10px 20px;
     font-size: 16px;
     border-radius: 8px;
     background-color: var(--dark-bg);
     color: #ffffff;
     border: none;
+    text-decoration: none;
 }
 
 button {
@@ -41,17 +49,20 @@ body {
     height: 100%;
 }
 
+
 .dark-mode {
     background-color: #121212;
     color: #ffffff;
 }
 
-.dark-mode button {
+.dark-mode button,
+.dark-mode .fake-button {
     background-color: #b2c1d0;
     color: black;
 }
 
-.dark-mode button:hover {
+.dark-mode button:hover,
+.dark-mode .fake-button:hover {
     background-color: #919dab;
 }
 
@@ -70,18 +81,33 @@ body {
     text-align: left;
 }
 
-dialog {
-    padding: 20px;
-    border: var(--dark-bg);
-    margin: auto;
+.rules {
+    padding: 50px 15%;
 }
 
-dialog ul {
+.rules p,
+.rules li {
+    line-height: 1.75;
+        text-align: left;
+}
+
+.rules ul {
     list-style: none;
 }
 
-dialog > ul {
-    margin-top: 20px;
+ul ul > li {
+    margin-left: 60px; 
+    color: #BBB;
+}
+
+ul ul > li::before {
+    content: "💠";
+}
+
+p.closing-msg {
+    color: #BBB;
+    font-style: italic;
+    font-weight: 600;
 }
 
 .suit {
@@ -90,13 +116,17 @@ dialog > ul {
 
 .highlight {
     color: var(--primary);
+    font-weight: 700;
 }
 
-.final-rules {
+.rules-ps {
     margin: 20px 50px;
+    padding: 10px 20px;
+    border: 1px solid var(--primary);
+    border-radius: 8px;
 }
 
-.final-rules p {
+.rules-ps p {
     margin: 5px 0;
     padding: 0;
 }
@@ -106,4 +136,12 @@ dialog > ul {
     justify-content: center;
     gap: 20px;
     margin-top: 20px;
+}
+
+.rules-footer {
+    padding-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
 }
