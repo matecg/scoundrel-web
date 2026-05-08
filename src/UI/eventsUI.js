@@ -24,6 +24,8 @@ function setEntitySelectionEvent(state) {
         btn.addEventListener('click', (e) => {
             const { type, value, index } = e.target.dataset;
             let canUseWeapon = false;
+            Array.from(roomButtons).forEach(el => el.classList.remove("entity-selected"));
+            btn.classList.add("entity-selected");
 
             if (type === "creature") {
                 canUseWeapon = player.canUseWeapon(value);

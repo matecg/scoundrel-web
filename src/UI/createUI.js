@@ -59,6 +59,17 @@ export default function createGameUI() {
         const entityButton = document.createElement("button");
         entityButton.classList.add("entity");
         entityButton.dataset["entity"] = "";
+
+        const topSpan = document.createElement("span");
+        topSpan.classList.add("top", "card-rank");
+        const bottomSpan = document.createElement("span");
+        bottomSpan.classList.add("bottom", "card-rank");
+        const middlePara = document.createElement("p");
+        middlePara.classList.add("card-suit");
+
+        entityButton.appendChild(topSpan);
+        entityButton.appendChild(middlePara);
+        entityButton.appendChild(bottomSpan);
         roomContainer.appendChild(entityButton);
     }
     roomContainer.appendChild(nextRoomBtn);

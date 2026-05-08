@@ -88,19 +88,19 @@ body {
 .rules p,
 .rules li {
     line-height: 1.75;
-        text-align: left;
+    text-align: left;
 }
 
 .rules ul {
     list-style: none;
 }
 
-ul ul > li {
-    margin-left: 60px; 
+ul ul>li {
+    margin-left: 60px;
     color: #BBB;
 }
 
-ul ul > li::before {
+ul ul>li::before {
     content: "💠";
 }
 
@@ -158,13 +158,34 @@ p.closing-msg {
 button.entity {
     width: 110px;
     height: 160px;
-    background-color: #121212;
-    color: var(--primary);
-    border: 2px solid var(--primary);
+    background-color: #0b0b0b;
+    /* color: #5c5d60;
+    border: 2px solid var(--dark-bg); */
+    border: 2px solid #FFF;
+    color: #fff;
+    position: relative;
+    font-family: 'Courier New', Courier, monospace
 }
 
 button.entity:hover {
     background-color: #252936;
+    box-shadow: 0px 2px 8px hsl(0, 100%, 44%);
+    border: 2px solid var(--primary);
+    color: var(--primary);
+}
+
+button.entity-selected {
+    color: var(--primary);
+    box-shadow: 0px 2px 8px hsl(0, 100%, 44%);
+    border: 2px solid var(--primary);
+}
+
+button.entity:disabled {
+    color: #5c5d60;
+    border: 2px solid var(--dark-bg);
+    background-color: #0b0b0b;
+    cursor: default;
+    box-shadow: none;
 }
 
 .game-layout {
@@ -188,4 +209,24 @@ button.entity:hover {
 
 .player-name {
     font-size: 20px;
+}
+
+.card-suit {
+    font-size: 30px;
+}
+
+.card-rank {
+    font-size: 24px;
+    color: inherit;
+    position: absolute;
+}
+
+.top {
+    left: 7.5%;
+    top: 3%;
+}
+
+.bottom {
+    right: 7.5%;
+    bottom: 3%;
 }
