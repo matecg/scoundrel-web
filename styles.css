@@ -145,3 +145,47 @@ p.closing-msg {
     align-items: center;
     gap: 20px;
 }
+
+.room {
+    display: grid;
+    grid-template: repeat(2, 160px) 50px / repeat(2, 110px);
+    gap: 20px;
+    justify-items: center;
+    justify-content: center;
+    grid-row: span 2;
+}
+
+button.entity {
+    width: 110px;
+    height: 160px;
+    background-color: #121212;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+}
+
+button.entity:hover {
+    background-color: #252936;
+}
+
+.game-layout {
+    display: grid;
+    grid-template: 1fr 150px / repeat(2, 300px);
+    justify-content: center;
+    padding: 20px;
+}
+
+.selected {
+    align-self: center;
+}
+
+.health-container {
+    display: flex;
+}
+
+.dungeon-info {
+    text-align: left;
+}
+
+.player-name {
+    font-size: 20px;
+}

@@ -4,14 +4,25 @@ import { MAX_HEALTH, ROOM_SIZE } from "../misc/constants.js";
  * Create the HTML elements for the scoundrel game.
  */
 export default function createGameUI() {
-    document.querySelector('.content').replaceChildren();
+    const contentDiv = document.querySelector('.content');
+    contentDiv.replaceChildren();
+    contentDiv.classList.add("game-layout");
 
     const container = document.querySelector(".content");
+
+    const dungeonInfoContainer = document.createElement("div");
+    dungeonInfoContainer.classList.add("dungeon-info");
 
     const playerPara = document.createElement("p");
     playerPara.classList.add('player-name');
 
+    const healthContainer = document.createElement("div");
     const healthPara = document.createElement("p");
+    const heartIcon = document.createElement("p");
+    heartIcon.textContent = "♥️";
+    healthContainer.appendChild(heartIcon);
+    healthContainer.appendChild(healthPara);
+    healthContainer.classList.add("health-container");
     healthPara.textContent = `Health: ${MAX_HEALTH}/${MAX_HEALTH}`;
     healthPara.classList.add("player-health");
 
@@ -33,6 +44,12 @@ export default function createGameUI() {
     completionPara.classList.add("completion");
     completionPara.textContent = "0%";
 
+    dungeonInfoContainer.appendChild(playerPara);
+    dungeonInfoContainer.appendChild(healthContainer);
+    dungeonInfoContainer.appendChild(weaponPara);
+    dungeonInfoContainer.appendChild(durabilityPara);
+    dungeonInfoContainer.appendChild(completionPara);
+
     const selectedContainer = document.createElement("div");
     selectedContainer.classList.add("selected");
 
@@ -46,12 +63,8 @@ export default function createGameUI() {
     }
     roomContainer.appendChild(nextRoomBtn);
     roomContainer.appendChild(skipRoomBtn);
-
-    container.appendChild(playerPara);
-    container.appendChild(healthPara);
-    container.appendChild(weaponPara);
-    container.appendChild(durabilityPara);
-    container.appendChild(completionPara);
+   
+    container.appendChild(dungeonInfoContainer);
     container.appendChild(roomContainer);
     container.appendChild(selectedContainer);
 
