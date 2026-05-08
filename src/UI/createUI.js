@@ -28,11 +28,11 @@ export default function createGameUI() {
 
     const nextRoomBtn = document.createElement("button");
     nextRoomBtn.textContent = "Next Room";
-    nextRoomBtn.classList.add("room-next");
+    nextRoomBtn.classList.add("room-next", "fill-btn");
 
     const skipRoomBtn = document.createElement("button");
     skipRoomBtn.textContent = "Skip Room";
-    skipRoomBtn.classList.add("room-skip");
+    skipRoomBtn.classList.add("room-skip", "fill-btn");
 
     const weaponPara = document.createElement("p");
     weaponPara.classList.add("weapon-value");
@@ -96,10 +96,10 @@ function createEntitySelectionUI(container) {
     entityValueParagraph.classList.add("entity-value");
 
     const interactButton = document.createElement("button");
-    interactButton.classList.add("interact-button");
+    interactButton.classList.add("interact-button", "fill-btn");
 
     const extraButton = document.createElement("button");
-    extraButton.classList.add("extra-button");
+    extraButton.classList.add("extra-button", "outline-btn");
     extraButton.style.display = "none";
    
     container.appendChild(entityParagraph);

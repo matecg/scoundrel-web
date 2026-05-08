@@ -10,7 +10,6 @@ import buildGameOverUI from "./gameOverUI.js";
 export function updateAllUI(state) {
     const { player, dungeon } = state;
     if (!player || !dungeon) return;
-    console.log(dungeon);
     updatePlayerName(player.name);
     updatePlayerHealth(player.health);
     updateWeapon(player.weapon);
@@ -75,11 +74,9 @@ export function updateRoom(room, canSkip) {
         next.dataset["type"] = room[i].type;
         next.dataset["value"] = room[i].value;
         next.dataset["index"] = i;
-
         
         next.disabled = roomLength === 1 || room[i].interacted;
         const ranks = Array.from(next.querySelectorAll(".card-rank"));
-        console.log(ranks);
         ranks.forEach(rankEl => rankEl.textContent = room[i].rank);
         next.querySelector(".card-suit").textContent = room[i].suit;
     }
@@ -104,7 +101,7 @@ export function updateEntitySelection({ type, value, index }, canUseWeapon = fal
     const valueParagraph = document.querySelector(".entity-value");
     const interactButton = document.querySelector(".interact-button");
     const extraButton = document.querySelector(".extra-button");
-
+    
     extraButton.style.display = "none";
     nameParagraph.textContent = capitalize(type);
     [interactButton, extraButton].forEach((btn) => {

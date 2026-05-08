@@ -9,7 +9,7 @@
 }
 
 body {
-    font-family: sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     text-align: center;
 }
 
@@ -30,18 +30,26 @@ button,
     padding: 10px 20px;
     font-size: 16px;
     border-radius: 8px;
-    background-color: var(--dark-bg);
-    color: #ffffff;
+    font-weight: 600;
     border: none;
     text-decoration: none;
+    outline: none;
+    font-family: inherit;
+}
+
+.dark-mode .fill-btn {
+    background-color: var(--primary);
+    color: #fff;
+}
+
+.dark-mode .outline-btn {
+    background-color: #121212;
+    border: 2px solid var(--primary);
+    color: var(--primary);
 }
 
 button {
     cursor: pointer;
-}
-
-button:hover {
-    background-color: #3c4d4f;
 }
 
 html,
@@ -49,21 +57,26 @@ body {
     height: 100%;
 }
 
-
 .dark-mode {
     background-color: #121212;
     color: #ffffff;
 }
 
-.dark-mode button,
-.dark-mode .fake-button {
-    background-color: #b2c1d0;
-    color: black;
-}
-
 .dark-mode button:hover,
 .dark-mode .fake-button:hover {
-    background-color: #919dab;
+    background-color: hsl(0, 100%, 44%);
+    color: #fff;
+}
+
+.dark-mode .outline-btn:hover {
+    border: 2px solid hsl(0, 100%, 44%);
+}
+
+.fill-btn:disabled,
+.fill-btn:disabled:hover {
+    background-color: #252936;
+    cursor: default;
+    color:#121212;
 }
 
 .dark-mode h1 {
@@ -148,7 +161,7 @@ p.closing-msg {
 
 .room {
     display: grid;
-    grid-template: repeat(2, 160px) 50px / repeat(2, 110px);
+    grid-template: repeat(2, 160px) 1fr / repeat(2, 110px);
     gap: 20px;
     justify-items: center;
     justify-content: center;

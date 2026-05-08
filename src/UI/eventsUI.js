@@ -22,7 +22,11 @@ function setEntitySelectionEvent(state) {
 
     for (const btn of roomButtons) {
         btn.addEventListener('click', (e) => {
-            const { type, value, index } = e.target.dataset;
+            let target = e.target;
+            while (target && !target.classList.contains("entity")) {
+                target = e.target.parentElement;
+            } 
+            const { type, value, index } = target.dataset;
             let canUseWeapon = false;
             Array.from(roomButtons).forEach(el => el.classList.remove("entity-selected"));
             btn.classList.add("entity-selected");
