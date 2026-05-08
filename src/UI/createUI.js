@@ -100,7 +100,7 @@ function createEntitySelectionUI(container) {
 
     const extraButton = document.createElement("button");
     extraButton.classList.add("extra-button", "outline-btn");
-    extraButton.style.display = "none";
+    extraButton.disabled = true;
    
     container.appendChild(entityParagraph);
     container.appendChild(entityValueParagraph);

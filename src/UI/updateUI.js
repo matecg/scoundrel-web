@@ -101,8 +101,8 @@ export function updateEntitySelection({ type, value, index }, canUseWeapon = fal
     const valueParagraph = document.querySelector(".entity-value");
     const interactButton = document.querySelector(".interact-button");
     const extraButton = document.querySelector(".extra-button");
-    
-    extraButton.style.display = "none";
+
+    // extraButton.style.display = "none";
     nameParagraph.textContent = capitalize(type);
     [interactButton, extraButton].forEach((btn) => {
         btn.dataset["type"] = type;
@@ -122,7 +122,7 @@ export function updateEntitySelection({ type, value, index }, canUseWeapon = fal
         case "creature":
             if (canUseWeapon) {
                 extraButton.textContent = "Use weapon";
-                extraButton.style.display = "inline-block";
+                extraButton.disabled = false;
             }
             valueParagraph.textContent = `Strength: ${value}`;
             interactButton.textContent = "Fight unarmed";
@@ -131,7 +131,7 @@ export function updateEntitySelection({ type, value, index }, canUseWeapon = fal
             return;
     }
 
-    document.querySelector(".selected").style.display = "block";
+    document.querySelector(".selected").style.display = "grid";
 }
 
 export function updateGameOverState(score) {

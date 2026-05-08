@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 :root {
@@ -77,6 +78,14 @@ body {
     background-color: #252936;
     cursor: default;
     color:#121212;
+}
+
+.outline-btn:disabled,
+.outline-btn:disabled:hover {
+    border: 2px solid #252936;
+    color: #252936;
+    cursor: default;
+    background-color: #121212;
 }
 
 .dark-mode h1 {
@@ -203,12 +212,31 @@ button.entity:disabled {
 
 .game-layout {
     display: grid;
-    grid-template: 1fr 150px / repeat(2, 300px);
+    grid-template: 1fr 1fr / repeat(2, 300px);
     justify-content: center;
     padding: 20px;
 }
 
 .selected {
+    align-self: center;
+    background-color: #0b0b0b;
+    padding: 20px;
+    border-radius: 8px;
+    border: 2px solid var(--primary);
+    display: grid;
+    grid-template: 1fr 1fr/ 1fr 1fr;
+    height: 170px;
+    column-gap: 10px;
+}
+
+.entity-name {
+    align-self: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.entity-value {
+    font-style: italic;
     align-self: center;
 }
 
