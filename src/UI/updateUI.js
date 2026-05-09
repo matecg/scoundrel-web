@@ -104,7 +104,8 @@ export function updateEntitySelection({ type, value, index }, canUseWeapon = fal
     const interactButton = document.querySelector(".interact-button");
     const extraButton = document.querySelector(".extra-button");
 
-    // extraButton.style.display = "none";
+    extraButton.textContent = "";
+    extraButton.disabled = true;
     nameParagraph.textContent = capitalize(type);
     [interactButton, extraButton].forEach((btn) => {
         btn.dataset["type"] = type;

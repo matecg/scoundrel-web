@@ -142,7 +142,7 @@ function createEntitySelectionUI(container) {
     interactButton.classList.add("interact-button", "fill-btn");
 
     const extraButton = document.createElement("button");
-    extraButton.classList.add("extra-button", "outline-btn");
+    extraButton.classList.add("extra-button", "fill-btn");
     extraButton.disabled = true;
 
     container.appendChild(entityParagraph);
