@@ -75,6 +75,7 @@ export function updateRoom(room, canSkip) {
         next.dataset["value"] = room[i].value;
         next.dataset["index"] = i;
         
+        next.classList.remove("entity-selected");
         next.disabled = roomLength === 1 || room[i].interacted;
         const ranks = Array.from(next.querySelectorAll(".card-rank"));
         ranks.forEach(rankEl => rankEl.textContent = room[i].rank);
