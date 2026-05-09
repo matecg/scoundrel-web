@@ -77,7 +77,7 @@ body {
 .fill-btn:disabled:hover {
     background-color: #252936;
     cursor: default;
-    color:#121212;
+    color: #121212;
 }
 
 .outline-btn:disabled,
@@ -240,9 +240,7 @@ button.entity:disabled {
     align-self: center;
 }
 
-.health-container {
-    display: flex;
-}
+
 
 .dungeon-info {
     text-align: left;
@@ -270,4 +268,64 @@ button.entity:disabled {
 .bottom {
     right: 7.5%;
     bottom: 3%;
+}
+
+.health-container {
+    display: grid;
+    grid-template: 1fr 40px / 20% 80%;
+    justify-items: center;
+    align-items: center;
+}
+
+.health-bar-bg {
+    height: 40px;
+    border: 3px solid #252936;
+    background-color: #121212;
+    border-radius: 8px;
+    width: 100%;
+    position: relative;
+}
+
+.health-bar {
+    height: 100%;
+    border-radius: 8px;
+    background-image: linear-gradient(90deg,
+            hsl(0deg 100% 29%) 0%,
+            hsl(0deg 100% 32%) 8%,
+            hsl(0deg 100% 35%) 17%,
+            hsl(0deg 100% 38%) 25%,
+            hsl(0deg 100% 43%) 33%,
+            hsl(0deg 100% 48%) 42%,
+            hsl(0deg 100% 53%) 50%,
+            hsl(0deg 100% 55%) 58%,
+            hsl(0deg 100% 58%) 67%,
+            hsl(0deg 100% 61%) 75%,
+            hsl(0deg 100% 63%) 83%,
+            hsl(0deg 100% 65%) 92%,
+            hsl(0deg 100% 67%) 100%);
+}
+
+.health-label {
+    font-size: 15px;
+    color: #BBB;
+    justify-self: start;
+    padding-left: 10px;
+}
+
+.health-value {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    font-weight: 600;
+    top: 15%;
+}
+
+.health-icon {
+    font-size: 24px;
+    grid-row: span 2;
+    border-radius: 50%;
+    background-color: #0b0b0b;
+    border: 2px solid var(--primary);
+    aspect-ratio: 1;
+    padding: 4px;
 }

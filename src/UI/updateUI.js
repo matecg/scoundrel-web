@@ -31,8 +31,10 @@ export function updatePlayerName(name) {
  * @param {number} newValue - Player's health value
  */
 export function updatePlayerHealth(newValue) {
-    const healthParagraph = document.querySelector(".player-health");
-    healthParagraph.textContent = `Health: ${newValue}/${MAX_HEALTH}`;
+    const healthParagraph = document.querySelector(".health-value");
+    healthParagraph.textContent = `${newValue}/${MAX_HEALTH}`;
+    const healthBar = document.querySelector(".health-bar");
+    healthBar.style.width = Math.round(newValue/MAX_HEALTH * 100) + "%";
 }
 
 /**

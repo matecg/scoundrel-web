@@ -22,8 +22,8 @@ export default class GameState {
     }
 
     get donePercentage() {
-        const percentage =  Math.floor(this.#dungeon.getCompletionPercent() * 10000) / 100;
-        return `${percentage}%`;
+        const percentage =  Math.round(this.#dungeon.getCompletionPercent() * 1000) / 10;
+        return percentage;
     }
 
     get dungeon() {

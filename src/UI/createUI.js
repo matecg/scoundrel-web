@@ -17,14 +17,26 @@ export default function createGameUI() {
     playerPara.classList.add('player-name');
 
     const healthContainer = document.createElement("div");
-    const healthPara = document.createElement("p");
-    const heartIcon = document.createElement("p");
-    heartIcon.textContent = "♥️";
-    healthContainer.appendChild(heartIcon);
-    healthContainer.appendChild(healthPara);
+    const healthLabel = document.createElement("p");
+    const healthValue = document.createElement("p");
+    const healthIcon = document.createElement("p");
+    const healthBar = document.createElement("div");
+    const healthBarBg = document.createElement("div");
+
+    healthIcon.textContent = "♥️";
+    healthIcon.classList.add("health-icon");
+    healthBar.classList.add("health-bar");
+    healthValue.textContent = `${MAX_HEALTH}/${MAX_HEALTH}`;
+    healthLabel.textContent = "Health:";
+    healthLabel.classList.add("health-label");
+    healthValue.classList.add("health-value");
+    healthBarBg.classList.add("health-bar-bg");
     healthContainer.classList.add("health-container");
-    healthPara.textContent = `Health: ${MAX_HEALTH}/${MAX_HEALTH}`;
-    healthPara.classList.add("player-health");
+    healthBarBg.appendChild(healthValue);
+    healthContainer.appendChild(healthIcon);
+    healthContainer.appendChild(healthLabel);
+    healthBarBg.appendChild(healthBar);
+    healthContainer.appendChild(healthBarBg);
 
     const nextRoomBtn = document.createElement("button");
     nextRoomBtn.textContent = "Next Room";
