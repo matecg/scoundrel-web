@@ -94,7 +94,8 @@ export function updateRoom(room, canSkip) {
  * @param {string} completion - Current completion provided by the state
  */
 export function updateCompletion(completion) {
-    document.querySelector(".completion").textContent = completion;
+    document.querySelector(".completed-value").textContent = `${completion}%`;
+    document.querySelector(".completed-bar").style.width = completion + "%";
 }
 
 export function updateEntitySelection({ type, value, index }, canUseWeapon = false) {

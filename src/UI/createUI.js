@@ -30,8 +30,9 @@ export default function createGameUI() {
     healthLabel.textContent = "Health:";
     healthLabel.classList.add("label");
     healthValue.classList.add("health-value");
-    healthBarBg.classList.add("health-bar-bg");
+    healthBarBg.classList.add("health-bar-bg", "bar-bg");
     healthContainer.classList.add("health-container");
+
     healthBarBg.appendChild(healthValue);
     healthContainer.appendChild(healthIcon);
     healthContainer.appendChild(healthLabel);
@@ -69,14 +70,28 @@ export default function createGameUI() {
     weaponContainer.appendChild(durabilityLabel);
     weaponContainer.appendChild(durabilityPara);
 
-    const completionPara = document.createElement("p");
-    completionPara.classList.add("completion");
-    completionPara.textContent = "0%";
+    const completedContainer = document.createElement("div");
+    const completedLabel = document.createElement("p");
+    const completedValue = document.createElement("p");
+    const completedBar = document.createElement("div");
+    const completedBarBg = document.createElement("div");
 
+    completedContainer.classList.add("completed-container");
+    completedLabel.textContent = "Explored:";
+    completedLabel.classList.add("label");
+    completedValue.classList.add("completed-value");
+    completedBarBg.classList.add("bar-bg");
+    completedBar.classList.add("completed-bar");
+
+    completedContainer.appendChild(completedLabel);
+    completedBarBg.appendChild(completedValue);
+    completedBarBg.appendChild(completedBar);
+    completedContainer.appendChild(completedBarBg);
+    
     dungeonInfoContainer.appendChild(playerPara);
     dungeonInfoContainer.appendChild(healthContainer);
     dungeonInfoContainer.appendChild(weaponContainer);
-    dungeonInfoContainer.appendChild(completionPara);
+    dungeonInfoContainer.appendChild(completedContainer);
 
     const selectedContainer = document.createElement("div");
     selectedContainer.classList.add("selected");
