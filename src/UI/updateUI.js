@@ -45,18 +45,16 @@ export function updateWeapon(weapon) {
     const weaponDmgParagraph = document.querySelector(".weapon-value");
 
     if (!weapon) {
-        weaponDmgParagraph.textContent = "Weapon Damage: 0 (unarmed)";
+        weaponDmgParagraph.textContent = "0 (unarmed)";
         return;
     }
 
     const durabilityParagraph = document.querySelector(".weapon-durability");
-    weaponDmgParagraph.textContent = `${weapon.damage} damage`;
+    weaponDmgParagraph.textContent = `${weapon.damage}`;
     if (weapon.durability.length > 0) {
-        durabilityParagraph.textContent = "Defeated: ";
-        weapon.durability.forEach((value, i) => {
-            durabilityParagraph.textContent += i < weapon.durability.length - 1
-                ? `${value}, `
-                : `${value}.`
+        durabilityParagraph.textContent = "";
+        weapon.durability.forEach((value) => {
+            durabilityParagraph.textContent += `${value} `
         });
     } else {
         durabilityParagraph.textContent = "";

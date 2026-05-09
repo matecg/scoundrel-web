@@ -24,11 +24,11 @@ export default function createGameUI() {
     const healthBarBg = document.createElement("div");
 
     healthIcon.textContent = "♥️";
-    healthIcon.classList.add("health-icon");
+    healthIcon.classList.add("health-icon", "icon");
     healthBar.classList.add("health-bar");
     healthValue.textContent = `${MAX_HEALTH}/${MAX_HEALTH}`;
     healthLabel.textContent = "Health:";
-    healthLabel.classList.add("health-label");
+    healthLabel.classList.add("label");
     healthValue.classList.add("health-value");
     healthBarBg.classList.add("health-bar-bg");
     healthContainer.classList.add("health-container");
@@ -46,11 +46,28 @@ export default function createGameUI() {
     skipRoomBtn.textContent = "Skip Room";
     skipRoomBtn.classList.add("room-skip", "fill-btn");
 
-    const weaponPara = document.createElement("p");
-    weaponPara.classList.add("weapon-value");
-
+    const weaponContainer = document.createElement("div");
+    const weaponIcon = document.createElement("p");
+    const weaponValue = document.createElement("p");
+    const weaponDamageLabel = document.createElement("p");
+    const durabilityLabel = document.createElement("p");
     const durabilityPara = document.createElement("p");
+
     durabilityPara.classList.add("weapon-durability");
+    durabilityLabel.textContent = "Last uses:";
+    durabilityLabel.classList.add("label");
+    weaponDamageLabel.textContent = "Weapon damage:";
+    weaponDamageLabel.classList.add("label");
+    weaponContainer.classList.add("weapon-container");
+    weaponValue.classList.add("weapon-value");
+    weaponIcon.textContent = "⚔️";
+    weaponIcon.classList.add("weapon-icon", "icon");
+
+    weaponContainer.appendChild(weaponIcon);
+    weaponContainer.appendChild(weaponDamageLabel);
+    weaponContainer.appendChild(weaponValue);
+    weaponContainer.appendChild(durabilityLabel);
+    weaponContainer.appendChild(durabilityPara);
 
     const completionPara = document.createElement("p");
     completionPara.classList.add("completion");
@@ -58,8 +75,7 @@ export default function createGameUI() {
 
     dungeonInfoContainer.appendChild(playerPara);
     dungeonInfoContainer.appendChild(healthContainer);
-    dungeonInfoContainer.appendChild(weaponPara);
-    dungeonInfoContainer.appendChild(durabilityPara);
+    dungeonInfoContainer.appendChild(weaponContainer);
     dungeonInfoContainer.appendChild(completionPara);
 
     const selectedContainer = document.createElement("div");
@@ -86,7 +102,7 @@ export default function createGameUI() {
     }
     roomContainer.appendChild(nextRoomBtn);
     roomContainer.appendChild(skipRoomBtn);
-   
+
     container.appendChild(dungeonInfoContainer);
     container.appendChild(roomContainer);
     container.appendChild(selectedContainer);
@@ -113,7 +129,7 @@ function createEntitySelectionUI(container) {
     const extraButton = document.createElement("button");
     extraButton.classList.add("extra-button", "outline-btn");
     extraButton.disabled = true;
-   
+
     container.appendChild(entityParagraph);
     container.appendChild(entityValueParagraph);
     container.appendChild(interactButton);

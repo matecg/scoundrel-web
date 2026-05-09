@@ -272,9 +272,10 @@ button.entity:disabled {
 
 .health-container {
     display: grid;
-    grid-template: 1fr 40px / 20% 80%;
+    grid-template: 1fr 45px / 45px 1fr;
     justify-items: center;
     align-items: center;
+    column-gap: 10px;
 }
 
 .health-bar-bg {
@@ -305,7 +306,7 @@ button.entity:disabled {
             hsl(0deg 100% 67%) 100%);
 }
 
-.health-label {
+.label {
     font-size: 15px;
     color: #BBB;
     justify-self: start;
@@ -321,11 +322,44 @@ button.entity:disabled {
 }
 
 .health-icon {
-    font-size: 24px;
     grid-row: span 2;
+}
+
+.icon {
+    font-size: 24px;
     border-radius: 50%;
     background-color: #0b0b0b;
     border: 2px solid var(--primary);
+    width: 45px;
     aspect-ratio: 1;
     padding: 4px;
+}
+
+.weapon-container {
+    display: grid;
+    grid-template: repeat(2, 1fr) / 45px min-content 1fr;
+    justify-items: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.weapon-value {
+    font-size: 20px;
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.weapon-icon {
+    grid-row: span 4;
+}
+
+.weapon-durability {
+    width: 100%;
+    background-color: #252936;
+    height: 100%;
+    border-radius: 8px;
+    padding: 5px;
+    font-size: 18px;
+    font-weight: 600;
+    color:#BBB;
 }
