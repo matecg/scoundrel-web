@@ -98,14 +98,15 @@ export function updateCompletion(completion) {
     document.querySelector(".completed-bar").style.width = completion + "%";
 }
 
-export function updateEntitySelection({ type, value, index }, canUseWeapon = false) {
+export function updateEntitySelection({ type, value, index }, canUseWeapon = false, canUsePotion = true) {
     const nameParagraph = document.querySelector(".entity-name");
     const valueParagraph = document.querySelector(".entity-value");
     const interactButton = document.querySelector(".interact-button");
     const extraButton = document.querySelector(".extra-button");
 
     extraButton.textContent = "";
-    extraButton.disabled = true;
+    extraButton.disabled = false;
+    interactButton.disabled = false;
     nameParagraph.textContent = capitalize(type);
     [interactButton, extraButton].forEach((btn) => {
         btn.dataset["type"] = type;
@@ -117,16 +118,17 @@ export function updateEntitySelection({ type, value, index }, canUseWeapon = fal
         case "potion":
             valueParagraph.textContent = `Heals for ${value} points`
             interactButton.textContent = "Drink";
+            interactButton.disabled = !canUsePotion;
+            extraButton.textContent = "Discard";
             break;
         case "weapon":
             valueParagraph.textContent = `Damage: ${value}`
             interactButton.textContent = "Equip";
+            extraButton.textContent = "Discard";
             break;
         case "creature":
-            if (canUseWeapon) {
-                extraButton.textContent = "Use weapon";
-                extraButton.disabled = false;
-            }
+            extraButton.textContent = "Use weapon";
+            extraButton.disabled = !canUseWeapon;
             valueParagraph.textContent = `Strength: ${value}`;
             interactButton.textContent = "Fight unarmed";
             break;

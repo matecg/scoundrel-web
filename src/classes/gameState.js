@@ -43,7 +43,8 @@ export default class GameState {
             name: this.#player.name,
             weapon,
             health: this.#player.health,
-            canUseWeapon: (creatureValue) => this.#player.canUseWeapon(creatureValue)
+            canUseWeapon: (creatureValue) => this.#player.canUseWeapon(creatureValue),
+            canUsePotion: this.#player.canUsePotion
         }
     }
 
@@ -54,6 +55,9 @@ export default class GameState {
         switch (type) {
             case "interact":
                 this.#interactWithEntity(data);
+                break;
+            case "discard":
+                this.#dungeon.room[+data.index].interacted = true;
                 break;
             case "skip":
                 this.#dungeon.skipRoom()

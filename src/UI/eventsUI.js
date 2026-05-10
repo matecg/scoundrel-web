@@ -34,7 +34,7 @@ function setEntitySelectionEvent(state) {
             if (type === "creature") {
                 canUseWeapon = player.canUseWeapon(value);
             }
-            updateEntitySelection({ type, value: +value, index: +index }, canUseWeapon);
+            updateEntitySelection({ type, value: +value, index: +index }, canUseWeapon, state.player.canUsePotion);
         });
     }
 }
@@ -57,8 +57,12 @@ function setEntityInteractionEvent(state) {
 
     document.querySelector(".extra-button")
         .addEventListener('click', (e) => {
-            const {value, index} = e.target.dataset;
-            state.runTurn({type: "interact", data: {index, useWeapon: true}});
+            const {value, index, type} = e.target.dataset;
+            if (type === "creature") {
+                state.runTurn({type: "interact", data: {index, useWeapon: true}});
+            } else {
+                state.runTurn({type: "discard", data: {index}});
+            }
             updateAllUI(state);
             if (state.isGameOver()) {
                 e.target.dispatchEvent(new CustomEvent("game-over", {bubbles:true}));
