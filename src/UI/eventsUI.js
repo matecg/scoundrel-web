@@ -85,7 +85,7 @@ function setRoomControlEvent(state) {
     document.querySelector(".room-skip")
         .addEventListener('click', (e) => {
             state.runTurn({type:"skip"});
-            updateRoom(state.dungeon.room, state.dungeon.room);
+            updateRoom(state.dungeon.room, state.dungeon.canSkip);
         });
 }
 

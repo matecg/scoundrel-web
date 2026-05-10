@@ -69,10 +69,16 @@ export function getEntityAndValue(card) {
  * @returns {any[]}
  */
 export function shuffleInPlace(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+    function shuffle() {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
     }
+
+    shuffle();
+    shuffle();
+
     return array;
 }
 

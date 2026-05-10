@@ -14,6 +14,7 @@ export function updateAllUI(state) {
     updatePlayerHealth(player.health);
     updateWeapon(player.weapon);
     updateRoom(dungeon.room, dungeon.canSkip);
+    console.log(dungeon);
     updateCompletion(state.donePercentage);
 }
 
@@ -68,7 +69,7 @@ export function updateWeapon(weapon) {
  */
 export function updateRoom(room, canSkip) {
     const entityButtons = document.querySelectorAll(".entity");
-    const roomLength = room.filter(entity => !entity.interacted).length;
+    const notInteractedCount = room.filter(entity => !entity.interacted).length;
     for (let i = 0; i < ROOM_SIZE; i++) {
         const next = entityButtons[i];
         next.dataset["type"] = room[i].type;
@@ -76,7 +77,7 @@ export function updateRoom(room, canSkip) {
         next.dataset["index"] = i;
         
         next.classList.remove("entity-selected");
-        next.disabled = roomLength === 1 || room[i].interacted;
+        next.disabled = notInteractedCount === 1 || room[i].interacted;
         const ranks = Array.from(next.querySelectorAll(".card-rank"));
         ranks.forEach(rankEl => rankEl.textContent = room[i].rank);
         next.querySelector(".card-suit").textContent = room[i].suit;
@@ -84,8 +85,8 @@ export function updateRoom(room, canSkip) {
 
     const nextBtn = document.querySelector(".room-next");
     const skipBtn = document.querySelector(".room-skip");
-    nextBtn.disabled = roomLength !== 1;
-    skipBtn.disabled = !(roomLength === ROOM_SIZE) || !canSkip;
+    nextBtn.disabled = notInteractedCount !== 1;
+    skipBtn.disabled = !canSkip;
     document.querySelector(".selected").style.display = "none";
 }
 

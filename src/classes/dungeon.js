@@ -4,7 +4,7 @@ import Entity from "./entity.js";
 
 export default class Dungeon {
     #entities;
-    #canSkip;
+    #isSkipAvailable;
     #room;
 
     constructor() {
@@ -13,11 +13,13 @@ export default class Dungeon {
         /**@type {Entity[]} */
         this.#room = this.#entities.slice(0, 4);
         /**@type {boolean} */
-        this.#canSkip = true;
+        this.#isSkipAvailable = true;
     }
 
     get canSkip() {
-        return this.#canSkip;
+        return this.#isSkipAvailable 
+            && this.#interactedInRoom() === 0
+            && this.#entities.filter(ent => !ent.interacted).length >= 8;
     }
 
     get room() {
@@ -31,11 +33,20 @@ export default class Dungeon {
      */
     getNextRoom() {
         if (this.#interactedInRoom() < (ROOM_SIZE - 1)) return [];
+        const cardsLeft = this.#entities.filter(ent => !ent.interacted);
+        const draftAmount = Math.min(ROOM_SIZE - 1, cardsLeft.length);
 
-        this.#canSkip = true;
-        const newEntities = this.#draftEntities(ROOM_SIZE - 1);
+        this.#isSkipAvailable = true;
+        const newEntities = this.#draftEntities(draftAmount);
         const toKeep = this.#room.filter(ent => !ent.interacted);
-        this.#room = [...toKeep, ...newEntities];
+        const newRoom = [...toKeep, ...newEntities];
+        if (newRoom.length < ROOM_SIZE) {
+            const interacted = this.#room.filter(ent => ent.interacted);
+            for (let i = 0; newRoom.length < ROOM_SIZE; i++) {
+                newRoom.push(interacted[i]);
+            }
+        }
+        this.#room = newRoom;
         return this.#room.slice(0);
     }
 
@@ -44,11 +55,9 @@ export default class Dungeon {
      * @returns {Entity[]}
      */
     skipRoom() {
-        if (!this.#canSkip
-            || this.#interactedInRoom() !== 0
-        ) return [];
+        if (!this.canSkip) return [];
 
-        this.#canSkip = false;
+        this.#isSkipAvailable = false;
         this.#entities = this.#entities.filter(ent => !this.#room.includes(ent));
         shuffleInPlace(this.#room);
         this.#entities.push(...this.#room);
@@ -74,7 +83,7 @@ export default class Dungeon {
                 score -= card.value;
         }
         if (leftCards.length == 1 && leftCards[0].type === "potion") {
-            score += lastCard.value;
+            score +=  leftCards[0].value;
         }
         return score;
     }
@@ -94,7 +103,9 @@ export default class Dungeon {
      */
     #draftEntities(amount = ROOM_SIZE) {
         const next = [];
-        for (const entity of this.#entities) {
+        const leftCards = this.#entities.filter(ent => !ent.interacted);
+
+        for (const entity of leftCards) {
             if (!entity.interacted && !this.#room.includes(entity))
                 next.push(entity);
             if (next.length === amount) break;
