@@ -140,8 +140,9 @@ export function updateEntitySelection({ type, value, index }, canUseWeapon = fal
     document.querySelector(".selected").style.display = "grid";
 }
 
-export function updateGameOverState(score) {
-    const icon = score > 0 ? "🏆" : "💀";
+export function updateGameOverState(score, completion) {
+    const icon = score >= 0 ? "🏆" : "💀";
+    updateCompletion(completion);
     buildGameOverUI(icon);
     document.querySelector(".score-value").textContent = `${score}`;
     document.querySelector(".selected").style.display = "none";

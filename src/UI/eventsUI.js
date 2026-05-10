@@ -96,7 +96,7 @@ function setRoomControlEvent(state) {
 function setGameOverEvent(state) {
     document.querySelector(".content")
         .addEventListener("game-over", (e) => {
-            updateGameOverState(state.dungeon.score);
+            updateGameOverState(state.getScore(), state.donePercentage);
 
             document.querySelector(".play-again-button")
                 .addEventListener("click", (e) => {

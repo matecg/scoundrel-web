@@ -19,7 +19,7 @@ export default class Dungeon {
     get canSkip() {
         return this.#isSkipAvailable 
             && this.#interactedInRoom() === 0
-            && this.#entities.filter(ent => !ent.interacted).length >= 8;
+            && this.#entities.filter(ent => !ent.interacted).length >= 5;
     }
 
     get room() {

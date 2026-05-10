@@ -30,7 +30,7 @@ describe("Dungeon Class Test Suit", () => {
         dungeon.room[2].interacted = true;
         const carryOver = dungeon.room[3];
         const nextRoom = dungeon.getNextRoom();
-        
+
         expect(initialRoom).not.toEqual(nextRoom);
         expect(nextRoom.includes(carryOver)).toBe(true);
     });
@@ -38,7 +38,7 @@ describe("Dungeon Class Test Suit", () => {
     test("correctly skip a room", () => {
         const dungeon = new Dungeon();
         const initialRoom = dungeon.room;
-        
+
         dungeon.skipRoom();
         const isDifferent = dungeon.room.every((el) => !initialRoom.some(card => card === el));
 
@@ -68,32 +68,7 @@ describe("Dungeon Class Test Suit", () => {
                 room = dungeon.getNextRoom();
             }
             room[i % 3].interacted = true;
-            expect(dungeon.getCompletionPercent()).toBeCloseTo((i + 1)/deckSize);
+            expect(dungeon.getCompletionPercent()).toBeCloseTo((i + 1) / deckSize);
         }
     });
-
-    // test("score returns correct value for the entire dungeon", () => {
-    //     const dungeon = new Dungeon();
-    //     const deckSize = 44;
-    //     let room = dungeon.room;
-    //     let score = -208
-
-    //     expect(dungeon.getScore()).toBe(score);
-
-    //     for (let i = 0; i < deckSize; i++) {
-    //         if (i > 0 && i % 3 == 0) {
-    //             room = dungeon.getNextRoom();
-    //             // console.log(room);
-    //         }
-            
-    //         room[i % 3].interacted = true;
-    //         if (room[i%3].type === "creature") {
-    //             score += room[i%3].value;
-    //         }
-    //         if (i === deckSize - 1 && room[(i + 1)%3].type === "potion") {
-    //             score += room[(i + 1)%3].value;
-    //         }
-    //         expect(dungeon.getScore()).toBe(score);
-    //     }
-    // });
 })

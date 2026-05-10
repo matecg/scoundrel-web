@@ -48,6 +48,18 @@ export default class GameState {
         }
     }
 
+    getScore() {
+        let score = this.#dungeon.getScore();
+        if (this.donePercentage > 97) {
+            score += this.#player.health;
+            const lastCard = this.#dungeon.room.find(ent => !ent.interacted);
+            if (lastCard.type === "potion") {
+                score += lastCard.value;
+            }
+        }
+        return score;
+    }
+
     runTurn(action) {
         if (this.isGameOver()) return false;
 
@@ -73,8 +85,8 @@ export default class GameState {
     }
 
     isGameOver() {
-        return this.#player.health === 0
-            || this.#dungeon.getCompletionPercent() === 1;
+        if (this.#player.health === 0) return true;
+        if (this.donePercentage >= 99) return true; 
     }
 
     #interactWithEntity(data) {
