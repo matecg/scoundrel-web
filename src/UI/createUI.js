@@ -13,8 +13,8 @@ export default function createGameUI() {
     const dungeonInfoContainer = document.createElement("div");
     dungeonInfoContainer.classList.add("dungeon-info");
 
-    const playerPara = document.createElement("p");
-    playerPara.classList.add('player-name');
+    const playerName = document.createElement("h2");
+    playerName.classList.add('player-name');
 
     const healthContainer = document.createElement("div");
     const healthLabel = document.createElement("p");
@@ -88,7 +88,7 @@ export default function createGameUI() {
     completedBarBg.appendChild(completedBar);
     completedContainer.appendChild(completedBarBg);
     
-    dungeonInfoContainer.appendChild(playerPara);
+    dungeonInfoContainer.appendChild(playerName);
     dungeonInfoContainer.appendChild(healthContainer);
     dungeonInfoContainer.appendChild(weaponContainer);
     dungeonInfoContainer.appendChild(completedContainer);
