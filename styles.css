@@ -226,9 +226,9 @@ button.entity:disabled {
     border-radius: 8px;
     border: 2px solid var(--primary);
     display: grid;
-    grid-template: 1fr 1fr/ 1fr 1fr;
-    height: 170px;
-    column-gap: 10px;
+    grid-template: min-content 65px/ 1fr 1fr;
+    /* height: 125px; */
+    gap: 10px;
 }
 
 .entity-name {
@@ -244,13 +244,15 @@ button.entity:disabled {
 
 .dungeon-info {
     text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .player-name {
     font-size: 20px;
     font-weight: 600;
     color: var(--primary);
-    padding: 10px;
 }
 
 .card-suit {
@@ -325,6 +327,7 @@ button.entity:disabled {
     top: 15%;
 }
 
+.weapon-icon,
 .health-icon {
     grid-row: span 2;
 }
@@ -351,10 +354,6 @@ button.entity:disabled {
     font-size: 20px;
     color: var(--primary);
     font-weight: 600;
-}
-
-.weapon-icon {
-    grid-row: span 4;
 }
 
 .weapon-durability {
