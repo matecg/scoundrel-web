@@ -38,12 +38,12 @@ button,
     font-family: inherit;
 }
 
-.dark-mode .fill-btn {
+.fill-btn {
     background-color: var(--primary);
     color: #fff;
 }
 
-.dark-mode .outline-btn {
+.outline-btn {
     background-color: #121212;
     border: 2px solid var(--primary);
     color: var(--primary);
@@ -56,20 +56,17 @@ button {
 html,
 body {
     height: 100%;
-}
-
-.dark-mode {
     background-color: #121212;
     color: #ffffff;
 }
 
-.dark-mode button:hover,
-.dark-mode .fake-button:hover {
+button:hover,
+.fake-button:hover {
     background-color: hsl(0, 100%, 44%);
     color: #fff;
 }
 
-.dark-mode .outline-btn:hover {
+.outline-btn:hover {
     border: 2px solid hsl(0, 100%, 44%);
 }
 
@@ -88,16 +85,16 @@ body {
     background-color: #121212;
 }
 
-.dark-mode h1 {
+h1 {
     color: var(--primary);
 }
 
-.dark-mode input {
+input {
     background-color: var(--dark-bg);
     color: #fff;
 }
 
-.dark-mode dialog {
+dialog {
     background-color: var(--dark-bg);
     color: #fff;
     text-align: left;
@@ -368,22 +365,20 @@ button.entity:disabled {
     padding: 5px;
     font-size: 18px;
     font-weight: 600;
-    color:#BBB;
+    color: #BBB;
 }
 
 .completed-bar {
     height: 100%;
     border-radius: 8px;
-    background-image: linear-gradient(
-    90deg,
-    hsl(100deg 4% 48%) 0%,
-    hsl(101deg 16% 50%) 17%,
-    hsl(103deg 30% 51%) 33%,
-    hsl(103deg 45% 52%) 50%,
-    hsl(103deg 60% 51%) 67%,
-    hsl(104deg 75% 52%) 83%,
-    hsl(103deg 92% 50%) 100%
-  );
+    background-image: linear-gradient(90deg,
+            hsl(100deg 4% 48%) 0%,
+            hsl(101deg 16% 50%) 17%,
+            hsl(103deg 30% 51%) 33%,
+            hsl(103deg 45% 52%) 50%,
+            hsl(103deg 60% 51%) 67%,
+            hsl(104deg 75% 52%) 83%,
+            hsl(103deg 92% 50%) 100%);
 }
 
 .game-over {
