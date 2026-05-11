@@ -77,4 +77,12 @@ export default class Player {
         if (isNaN(+lastCreature)) return true;
         return +lastCreature > creatureStrength;
     }
+
+    /**
+     * Return the player score value.
+     * @returns {number}
+     */
+    getScore() {
+        return this.health;
+    }
 }

@@ -6,7 +6,7 @@ import { updateAllUI, updateEntitySelection, updateGameOverState, updateRoom } f
  * @param {import ("../classes/gameState.js").default} state - Current game state
  */
 export default function setGameEvents(state) {
-    setEntitySelectionEvent(state);
+    setCardClickEvent(state);
     setEntityInteractionEvent(state);
     setRoomControlEvent(state);
     setGameOverEvent(state);
@@ -16,7 +16,7 @@ export default function setGameEvents(state) {
  * Event fired when a game card is clicked, before being interacted with.
  * @param {import ("../classes/gameState.js").default} state - Current game state
  */
-function setEntitySelectionEvent(state) {
+function setCardClickEvent(state) {
     const { player } = state;
     const roomButtons = document.querySelectorAll(".entity");
 
@@ -25,7 +25,7 @@ function setEntitySelectionEvent(state) {
             let target = e.target;
             while (target && !target.classList.contains("entity")) {
                 target = e.target.parentElement;
-            } 
+            }
             const { type, value, index } = target.dataset;
             let canUseWeapon = false;
             Array.from(roomButtons).forEach(el => el.classList.remove("entity-selected"));
@@ -47,25 +47,26 @@ function setEntityInteractionEvent(state) {
 
     document.querySelector(".interact-button")
         .addEventListener('click', (e) => {
-            const {value, index} = e.target.dataset;
-            state.runTurn({type: "interact", data: {index}})
+            const { value, index, type } = e.target.dataset;
+            let data = { index };
+            if (type === "creature") {
+                data = { index, useWeapon: true }
+            }
+            state.runTurn({ type: "interact", data });
             updateAllUI(state);
             if (state.isGameOver()) {
-                e.target.dispatchEvent(new CustomEvent("game-over", {bubbles:true}));
+                e.target.dispatchEvent(new CustomEvent("game-over", { bubbles: true }));
             }
         });
 
     document.querySelector(".extra-button")
         .addEventListener('click', (e) => {
-            const {value, index, type} = e.target.dataset;
-            if (type === "creature") {
-                state.runTurn({type: "interact", data: {index, useWeapon: true}});
-            } else {
-                state.runTurn({type: "discard", data: {index}});
-            }
+            const { value, index, type } = e.target.dataset;
+            const actionType = type === "creature" ? "interact" : "discard";
+            state.runTurn({ type: actionType, data: { index } });
             updateAllUI(state);
             if (state.isGameOver()) {
-                e.target.dispatchEvent(new CustomEvent("game-over", {bubbles:true}));
+                e.target.dispatchEvent(new CustomEvent("game-over", { bubbles: true }));
             }
         });
 }
@@ -75,17 +76,18 @@ function setEntityInteractionEvent(state) {
  * @param {import ("../classes/gameState.js").default} state 
  */
 function setRoomControlEvent(state) {
-    
+
     document.querySelector(".room-next")
         .addEventListener('click', (e) => {
-            state.runTurn({type:"next"});
-            updateRoom(state.dungeon.room, state.dungeon.canSkip);
+            state.runTurn({ type: "next" });
+            // console.log(state);
+            updateRoom(state.dungeon);
         })
 
     document.querySelector(".room-skip")
         .addEventListener('click', (e) => {
-            state.runTurn({type:"skip"});
-            updateRoom(state.dungeon.room, state.dungeon.canSkip);
+            state.runTurn({ type: "skip" });
+            updateRoom(state.dungeon);
         });
 }
 

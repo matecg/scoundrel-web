@@ -27,13 +27,13 @@ export default class GameState {
     }
 
     get dungeon() {
-        const safeRoom = this.#dungeon.room.map(el => {
-            return {...el}
-        });
         return {
-            room: safeRoom,
+            room: this.#dungeon.room,
             canSkip: this.#dungeon.canSkip,
-            score: this.#dungeon.getScore()
+            canGetNext: this.#dungeon.canGetNext,
+            cardsLeft: this.#dungeon.cardsLeft,
+            score: this.#dungeon.getScore(),
+            entitiesLeft: this.#dungeon.getEntitiesLeft()
         }
     }
 
@@ -50,19 +50,15 @@ export default class GameState {
 
     getScore() {
         let score = this.#dungeon.getScore();
-        if (this.donePercentage > 97) {
-            score += this.#player.health;
-            const lastCard = this.#dungeon.room.find(ent => !ent.interacted);
-            if (lastCard.type === "potion") {
-                score += lastCard.value;
-            }
+        if (!this.#dungeon.cardsLeft) {
+            score += this.#player.getScore();
         }
         return score;
     }
 
     runTurn(action) {
         if (this.isGameOver()) return false;
-
+        console.log(this.#dungeon);
         const { type, data } = action;
         switch (type) {
             case "interact":
@@ -84,9 +80,14 @@ export default class GameState {
         this.#turn++;
     }
 
+    /**
+     * Checks whether or not the game is over.
+     * @returns {boolean}
+     */
     isGameOver() {
-        if (this.#player.health === 0) return true;
-        if (this.donePercentage >= 99) return true; 
+        if (this.#player.health <= 0) return true;
+        if (this.#dungeon.cardsLeft === 0) return true;
+        return false;
     }
 
     #interactWithEntity(data) {

@@ -13,8 +13,7 @@ export function updateAllUI(state) {
     updatePlayerName(player.name);
     updatePlayerHealth(player.health);
     updateWeapon(player.weapon);
-    updateRoom(dungeon.room, dungeon.canSkip);
-    console.log(dungeon);
+    updateRoom(dungeon);
     updateCompletion(state.donePercentage);
 }
 
@@ -64,10 +63,10 @@ export function updateWeapon(weapon) {
 
 /**
  * Update the room the entities and room control buttons, Next and Skip.
- * @param {import ("../classes/entity.js").default[]} room - A 4 size array of entities
- * @param {boolean} canSkip 
+ * @param {Object} dungeon - An data object representing the current dungeon state.
  */
-export function updateRoom(room, canSkip) {
+export function updateRoom(dungeon) {
+    const {room, canSkip, entitiesLeft, canGetNext} = dungeon;
     const entityButtons = document.querySelectorAll(".entity");
     const notInteractedCount = room.filter(entity => !entity.interacted).length;
     for (let i = 0; i < ROOM_SIZE; i++) {
@@ -77,7 +76,7 @@ export function updateRoom(room, canSkip) {
         next.dataset["index"] = i;
         
         next.classList.remove("entity-selected");
-        next.disabled = notInteractedCount === 1 || room[i].interacted;
+        next.disabled = (notInteractedCount === 1 && entitiesLeft > 1) || room[i].interacted;
         const ranks = Array.from(next.querySelectorAll(".card-rank"));
         ranks.forEach(rankEl => rankEl.textContent = room[i].rank);
         next.querySelector(".card-suit").textContent = room[i].suit;
@@ -85,7 +84,8 @@ export function updateRoom(room, canSkip) {
 
     const nextBtn = document.querySelector(".room-next");
     const skipBtn = document.querySelector(".room-skip");
-    nextBtn.disabled = notInteractedCount !== 1;
+    // console.log(notInteractedCount, entitiesLeft);
+    nextBtn.disabled = notInteractedCount !== 1 && entitiesLeft > 1;
     skipBtn.disabled = !canSkip;
     document.querySelector(".selected").style.display = "none";
 }
@@ -128,10 +128,10 @@ export function updateEntitySelection({ type, value, index }, canUseWeapon = fal
             extraButton.textContent = "Discard";
             break;
         case "creature":
-            extraButton.textContent = "Use weapon";
-            extraButton.disabled = !canUseWeapon;
+            extraButton.textContent = "Fight unarmed";
             valueParagraph.textContent = `Strength: ${value}`;
-            interactButton.textContent = "Fight unarmed";
+            interactButton.textContent = "Use weapon";
+            interactButton.disabled = !canUseWeapon;
             break;
         default:
             return;
