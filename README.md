@@ -1,11 +1,17 @@
 # Scoundrel Web
 
-An implementation of the card game Scoundrel using simple web stack: HTML, CSS and JavaScript. The goal of this project is to simply practice web development!
+An implementation of the card game Scoundrel using simple web stack: HTML, CSS and JavaScript. The goal of this project is to simply practice web development! 
+
+That said there are still some bugs, since the project is under construction!
 
 Developed by Matecg.
 Thank you for stepping by! 👋
 
+You may access the project by forking and cloning this repository, or by checking the [👉 game's website](https://matecg.github.io/scoundrel-web/).
+
 ## Game Rules
+
+> You may read it from here, the game page itself or check out this [▶️ amazing video](https://www.youtube.com/watch?v=Gt2tYzM93h4) instead to learn the rules.
 
 - **Setup**: Shuffle the deck (the Dungeon). Start with 20 HP (use a d20 or spare cards).
 - **Rooms**: Draw 4 cards from the deck to create a "Room."
